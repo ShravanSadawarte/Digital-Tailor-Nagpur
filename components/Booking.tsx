@@ -61,6 +61,7 @@ export default function Booking({ userId }: Props) {
     <section id="booking" className="section">
       <div className="container contact-grid">
         <div>
+          <span className="eyebrow">Doorstep pickup</span>
           <h2>Book a Stitching Order</h2>
           <p className="muted">
             Tell us what you need — we pick up from your doorstep anywhere in

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getSupabase } from "@/lib/supabase/client";
+import PageHero from "@/components/PageHero";
 
 type Example = {
   id: string;
@@ -27,11 +28,11 @@ export default function TransformationsPage() {
 
   return (
     <main className="container page">
-      <h1 className="page-title">Raw → Best Transformations</h1>
-      <p className="muted">
-        See how sarees &amp; old fabrics become stunning new outfits. Pick a
-        design, then visit the shop with your own raw material!
-      </p>
+      <PageHero
+        eyebrow="Upcycle"
+        title="Raw → Best Transformations"
+        sub="See how sarees & old fabrics become stunning new outfits. Pick a design, then visit the shop with your own raw material!"
+      />
 
       {rows.length === 0 && (
         <p className="muted">Examples coming soon!</p>

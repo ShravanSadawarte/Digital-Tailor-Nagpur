@@ -43,6 +43,7 @@ export default function Contact() {
     <section id="contact" className="section alt">
       <div className="container contact-grid">
         <div>
+          <span className="eyebrow">Get in touch</span>
           <h2>Contact Us</h2>
           <p className="muted">
             Have questions about fitting, pricing or bulk orders? Reach out.

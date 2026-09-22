@@ -5,6 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { getSupabase } from "@/lib/supabase/client";
 import { inr } from "@/components/Receipt";
+import Reveal from "@/components/Reveal";
+
+function offPct(price: number, mrp?: number | null) {
+  if (!mrp || mrp <= price) return 0;
+  return Math.round((1 - price / mrp) * 100);
+}
 
 export function ShopPreview() {
   const [products, setProducts] = useState<any[]>([]);
@@ -21,8 +27,10 @@ export function ShopPreview() {
   return (
     <section className="section">
       <div className="container">
+        <Reveal>
         <div className="sec-head">
           <div>
+            <span className="eyebrow">Ready to wear</span>
             <h2>Shop Collection</h2>
             <p className="muted">Ready-made outfits in sizes S to XXL.</p>
           </div>
@@ -30,20 +38,28 @@ export function ShopPreview() {
             View all →
           </Link>
         </div>
+        </Reveal>
         <div className="product-grid mini">
-          {products.map((p) => (
-            <Link key={p.id} href="/shop" className="card product-card">
-              {p.images?.[0] ? (
-                <Image src={p.images[0]} alt={p.name} width={400} height={260} className="product-img" />
-              ) : (
-                <div className="product-ph">👗</div>
-              )}
+          {products.map((p, i) => (
+            <Reveal key={p.id} delay={Math.min(i, 3) * 80}>
+            <Link href="/shop" className="card product-card lift">
+              <div className="product-media">
+                {offPct(p.price, p.mrp) > 0 && (
+                  <span className="off-badge">{offPct(p.price, p.mrp)}% off</span>
+                )}
+                {p.images?.[0] ? (
+                  <Image src={p.images[0]} alt={p.name} width={400} height={260} className="product-img" />
+                ) : (
+                  <div className="product-ph">👗</div>
+                )}
+              </div>
               <h3>{p.name}</h3>
               <div className="price-line">
                 <strong>{inr(p.price)}</strong>
                 {p.mrp ? <s>{inr(p.mrp)}</s> : null}
               </div>
             </Link>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -65,8 +81,10 @@ export function TransformationsPreview() {
   return (
     <section className="section alt">
       <div className="container">
+        <Reveal>
         <div className="sec-head">
           <div>
+            <span className="eyebrow">Upcycle</span>
             <h2>Raw → Best</h2>
             <p className="muted">Your old sarees, reborn as new favourites.</p>
           </div>
@@ -74,9 +92,11 @@ export function TransformationsPreview() {
             See all →
           </Link>
         </div>
+        </Reveal>
         <div className="grid3">
-          {rows.map((r) => (
-            <Link key={r.id} href="/transformations" className="feature tf-mini">
+          {rows.map((r, i) => (
+            <Reveal key={r.id} delay={Math.min(i, 2) * 90}>
+            <Link href="/transformations" className="feature tf-mini">
               <div className="tf-mini-imgs">
                 <span>🧵</span>
                 <span className="tf-arrow">→</span>
@@ -85,6 +105,7 @@ export function TransformationsPreview() {
               <h3>{r.title}</h3>
               <p>{r.description}</p>
             </Link>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -96,6 +117,7 @@ export function BuilderCTA() {
   return (
     <section className="section">
       <div className="container">
+        <Reveal>
         <div className="builder-cta">
           <div>
             <span className="pickup-tag">Custom Dress Builder</span>
@@ -109,6 +131,7 @@ export function BuilderCTA() {
             Start building →
           </Link>
         </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -121,7 +144,7 @@ export function Craftsman() {
   return (
     <section className="section alt" id="craftsman">
       <div className="container craftsman-grid">
-        <div className="craftsman-photo">
+        <Reveal className="craftsman-photo">
           {imgOk ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src="/father.jpg" alt="Master tailor at work" onError={() => setImgOk(false)} />
@@ -129,7 +152,8 @@ export function Craftsman() {
             <div className="craftsman-ph">✂️<small>Add photo as public/father.jpg</small></div>
           )}
           <div className="craftsman-badge">25+ yrs of fitting</div>
-        </div>
+        </Reveal>
+        <Reveal delay={120}>
         <div>
           <span className="pickup-tag">Meet the masterji</span>
           <h2>The hands behind every stitch</h2>
@@ -147,6 +171,7 @@ export function Craftsman() {
             Visit the shop
           </a>
         </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -176,10 +201,14 @@ export function OffersStrip() {
   return (
     <section className="section offers-sec">
       <div className="container">
+        <Reveal>
+        <span className="eyebrow">Limited time</span>
         <h2>🎁 Offers &amp; Promotions</h2>
+        </Reveal>
         <div className="offer-grid">
-          {offers.map((o) => (
-            <div key={o.id} className="card offer-card">
+          {offers.map((o, i) => (
+            <Reveal key={o.id} delay={Math.min(i, 2) * 90}>
+            <div className="card offer-card lift">
               {o.image_url ? (
                 <Image src={o.image_url} alt={o.title} width={500} height={220} className="offer-img" />
               ) : (
@@ -190,6 +219,7 @@ export function OffersStrip() {
               {o.conditions && <small className="offer-cond">* {o.conditions}</small>}
               {o.valid_to && <div className="offer-valid">Valid till {o.valid_to}</div>}
             </div>
+            </Reveal>
           ))}
         </div>
       </div>

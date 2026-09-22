@@ -1,5 +1,7 @@
 "use client";
 
+import Reveal from "@/components/Reveal";
+
 type Props = {
   onSignup: () => void;
 };
@@ -21,7 +23,7 @@ export default function Hero({ onSignup }: Props) {
   return (
     <section className="hero hero-v2">
       <div className="container hero-grid">
-        <div className="hero-copy">
+        <Reveal className="hero-copy">
           <a href="#booking" className="hero-pill">
             <span className="pulse-dot" />
             Now accepting orders in Nagpur
@@ -76,9 +78,9 @@ export default function Hero({ onSignup }: Props) {
               <span>Loved by 5,000+ customers in Nagpur</span>
             </div>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="hero-visual">
+        <Reveal delay={140} className="hero-visual">
           <div className="hero-blob" aria-hidden />
           <div className="card pickup-card">
             <div className="pickup-head">
@@ -121,10 +123,11 @@ export default function Hero({ onSignup }: Props) {
               <div className="progress-bar" />
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
 
       <div className="container">
+        <Reveal delay={220}>
         <div className="hero-stats-bar">
           <div>
             <strong>5000+</strong>
@@ -143,6 +146,7 @@ export default function Hero({ onSignup }: Props) {
             <span>Alterations express</span>
           </div>
         </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,12 +1,58 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
-    <footer>
-      <div className="container foot">
-        <span>© 2026 Digital Tailor Nagpur. All rights reserved.</span>
-        <span>
-          <a href="#home">Home</a> • <a href="#contact">Contact</a> •{" "}
-          <a href="#home">Login</a>
-        </span>
+    <footer className="footer-rich">
+      <div className="container">
+        <div className="foot-grid">
+          <div className="foot-brand">
+            <Link href="/" className="logo">
+              <span className="logo-icon">✂️</span>
+              <span className="logo-text" style={{ color: "#FFF9F3" }}>
+                Digital Tailor <small>Nagpur</small>
+              </span>
+            </Link>
+            <p>
+              Custom stitching, express alterations and doorstep pickup —
+              trusted by Nagpur families for 25+ years.
+            </p>
+          </div>
+
+          <div className="foot-col">
+            <h4>Shop</h4>
+            <ul>
+              <li><Link href="/shop">Collection</Link></li>
+              <li><Link href="/builder">Dress Builder</Link></li>
+              <li><Link href="/transformations">Raw → Best</Link></li>
+              <li><Link href="/cart">Your Bag</Link></li>
+            </ul>
+          </div>
+
+          <div className="foot-col">
+            <h4>Account</h4>
+            <ul>
+              <li><Link href="/profile">My Profile</Link></li>
+              <li><Link href="/profile">Measurements</Link></li>
+              <li><Link href="/profile">Track Orders</Link></li>
+              <li><Link href="/#booking">Book a Pickup</Link></li>
+            </ul>
+          </div>
+
+          <div className="foot-col">
+            <h4>Visit Us</h4>
+            <ul>
+              <li>📍 Shop 12, Main Road, Sitabuldi, Nagpur 440012</li>
+              <li>📞 +91 98765 43210</li>
+              <li>✉️ hello@digitaltailor.in</li>
+              <li>⏰ Mon–Sat, 10am – 8pm</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="foot-bottom">
+          <span>© 2026 Digital Tailor Nagpur. All rights reserved.</span>
+          <span>Stitched with care in Nagpur ✂️</span>
+        </div>
       </div>
     </footer>
   );

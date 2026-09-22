@@ -5,7 +5,6 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Booking from "@/components/Booking";
 import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
 import AuthModal, { type AuthMode } from "@/components/AuthModal";
 import {
   ShopPreview,
@@ -48,7 +47,6 @@ export default function Home() {
         <Booking userId={userId} />
         <Contact />
       </main>
-      <Footer />
       <AuthModal mode={authMode} onClose={() => setAuthMode(null)} />
     </>
   );

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { getSupabase } from "@/lib/supabase/client";
+import PageHero from "@/components/PageHero";
 import AuthModal, { type AuthMode } from "@/components/AuthModal";
 import { Receipt, inr, type ReceiptLine } from "@/components/Receipt";
 
@@ -179,8 +180,11 @@ export default function BuilderPage() {
 
   return (
     <main className="container page">
-      <h1 className="page-title">Custom Dress Builder</h1>
-      <p className="muted">Design your dream outfit step-by-step. Estimated price updates live.</p>
+      <PageHero
+        eyebrow="Made to measure"
+        title="Custom Dress Builder"
+        sub="Design your dream outfit step-by-step. Estimated price updates live."
+      />
 
       {designRef && <p className="design-ref">📌 Reference design: <strong>{designRef}</strong></p>}
 

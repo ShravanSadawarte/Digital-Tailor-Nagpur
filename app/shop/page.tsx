@@ -6,6 +6,8 @@ import Link from "next/link";
 import { getSupabase } from "@/lib/supabase/client";
 import { useCart } from "@/lib/cart";
 import { inr } from "@/components/Receipt";
+import PageHero from "@/components/PageHero";
+import Reveal from "@/components/Reveal";
 
 type Product = {
   id: string;
@@ -28,11 +30,15 @@ export default function ShopPage() {
   const [size, setSize] = useState("all");
   const [picked, setPicked] = useState<Record<string, string>>({});
   const [added, setAdded] = useState("");
+  const [loading, setLoading] = useState(true);
   const { add } = useCart();
 
   useEffect(() => {
     const sb = getSupabase();
-    if (!sb) return;
+    if (!sb) {
+      setLoading(false);
+      return;
+    }
     sb.from("categories")
       .select("*")
       .eq("kind", "product")
@@ -41,7 +47,10 @@ export default function ShopPage() {
       .select("*, categories(name)")
       .eq("available", true)
       .order("created_at", { ascending: false })
-      .then(({ data }) => data && setProducts(data as Product[]));
+      .then(({ data }) => {
+        if (data) setProducts(data as Product[]);
+        setLoading(false);
+      });
   }, []);
 
   const list = products.filter(
@@ -63,10 +72,11 @@ export default function ShopPage() {
 
   return (
     <main className="container page">
-      <h1 className="page-title">Shop Collection</h1>
-      <p className="muted">
-        Ready-made kurtis, suits, gowns &amp; more — standard sizes S to XXL.
-      </p>
+      <PageHero
+        eyebrow="Ready to wear"
+        title="Shop Collection"
+        sub="Ready-made kurtis, suits, gowns & more — standard sizes S to XXL."
+      />
 
       <div className="filters">
         <select value={cat} onChange={(e) => setCat(e.target.value)}>
@@ -87,24 +97,38 @@ export default function ShopPage() {
         </select>
       </div>
 
-      {list.length === 0 && (
+      {loading && (
+        <div className="product-grid" aria-hidden>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="card skel skel-card" />
+          ))}
+        </div>
+      )}
+
+      {!loading && list.length === 0 && (
         <p className="muted">No products yet — check back soon!</p>
       )}
 
       <div className="product-grid">
-        {list.map((p) => (
-          <div key={p.id} className="card product-card">
-            {p.images?.[0] ? (
-              <Image
-                src={p.images[0]}
-                alt={p.name}
-                width={400}
-                height={300}
-                className="product-img"
-              />
-            ) : (
-              <div className="product-ph">👗</div>
-            )}
+        {list.map((p) => {
+          const off = p.mrp && p.mrp > p.price ? Math.round((1 - p.price / p.mrp) * 100) : 0;
+          return (
+          <Reveal key={p.id}>
+          <div className="card product-card lift">
+            <div className="product-media">
+              {off > 0 && <span className="off-badge">{off}% off</span>}
+              {p.images?.[0] ? (
+                <Image
+                  src={p.images[0]}
+                  alt={p.name}
+                  width={400}
+                  height={300}
+                  className="product-img"
+                />
+              ) : (
+                <div className="product-ph">👗</div>
+              )}
+            </div>
             <div className="product-cat">{p.categories?.name || "Boutique"}</div>
             <h3>{p.name}</h3>
             <p className="muted">{p.description}</p>
@@ -135,7 +159,9 @@ export default function ShopPage() {
               {added === p.id ? "Added ✓" : "Add to Bag"}
             </button>
           </div>
-        ))}
+          </Reveal>
+          );
+        })}
       </div>
 
       <div className="page-cta">

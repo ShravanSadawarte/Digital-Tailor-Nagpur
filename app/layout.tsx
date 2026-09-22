@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces } from "next/font/google";
 import { CartProvider } from "@/lib/cart";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Announcement from "@/components/Announcement";
+import BackToTop from "@/components/BackToTop";
 import "./globals.css";
 
 const display = Fraunces({
@@ -34,8 +37,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={display.variable}>
         <CartProvider>
+          <Announcement />
           <Navbar />
           {children}
+          <Footer />
+          <BackToTop />
         </CartProvider>
       </body>
     </html>

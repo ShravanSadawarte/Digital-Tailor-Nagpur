@@ -18,12 +18,20 @@ const LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [email, setEmail] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [needPass, setNeedPass] = useState(false);
   const [authMode, setAuthMode] = useState<AuthMode | null>(null);
   const { count } = useCart();
   const path = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const sb = getSupabase();
@@ -79,7 +87,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="navbar">
+      <header className={`navbar${scrolled ? " scrolled" : ""}`}>
         <div className="container nav-inner">
           <Link href="/" className="logo">
             <span className="logo-icon">✂️</span>
