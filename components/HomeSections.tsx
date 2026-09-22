@@ -100,13 +100,13 @@ export function TransformationsPreview() {
         <div className="grid3">
           {rows.map((r, i) => (
             <Reveal key={r.id} delay={Math.min(i, 2) * 90}>
-            <Link href="/transformations" className="feature tf-mini">
+            <div className="feature tf-mini">
               <div className="tf-imgs tf-mini-photos">
                 <div className="tf-side">
                   {r.before_image ? (
                     <Image src={r.before_image} alt="Before" width={200} height={140} className="tf-img" />
                   ) : (
-                    <div className="tf-empty"><Icon name="scissors" size={28} /><small>Raw</small></div>
+                    <div className="tf-empty"><Icon name="scissors" size={26} /><small>Raw material</small></div>
                   )}
                   <span className="tf-tag">Before</span>
                 </div>
@@ -115,7 +115,7 @@ export function TransformationsPreview() {
                   {r.after_image ? (
                     <Image src={r.after_image} alt="After" width={200} height={140} className="tf-img" />
                   ) : (
-                    <div className="tf-empty"><Icon name="dress" size={28} /><small>Stitched</small></div>
+                    <div className="tf-empty"><Icon name="dress" size={26} /><small>Finished dress</small></div>
                   )}
                   <span className="tf-tag tag-after">After</span>
                 </div>
@@ -123,7 +123,13 @@ export function TransformationsPreview() {
               <div className="tf-type">{r.dress_type}</div>
               <h3>{r.title}</h3>
               <p>{r.description}</p>
-            </Link>
+              <Link
+                href={`/builder?ref=${encodeURIComponent(r.title)}`}
+                className="btn btn-primary btn-block tf-cta"
+              >
+                Use this design in Dress Builder
+              </Link>
+            </div>
             </Reveal>
           ))}
         </div>
