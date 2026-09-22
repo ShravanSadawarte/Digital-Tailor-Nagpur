@@ -57,7 +57,7 @@ export default function AuthModal({ mode, onClose }: Props) {
           onClose();
         } else {
           // Email confirmation is ON — user must confirm first.
-          setNotice("Account created! Check your email to confirm. ✅");
+          setNotice("Account created! Check your email to confirm.");
         }
       } else {
         const { error } = await supabase.auth.signInWithPassword({

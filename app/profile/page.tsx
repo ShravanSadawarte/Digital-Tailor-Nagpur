@@ -59,7 +59,7 @@ export default function ProfilePage() {
     const sb = getSupabase();
     if (!sb || !userId) return;
     const { error } = await sb.from("profiles").upsert({ id: userId, ...profile });
-    setSaved(error ? error.message : "Profile saved ✅");
+    setSaved(error ? error.message : "Profile saved ✓");
     setTimeout(() => setSaved(""), 2000);
   };
 
@@ -109,7 +109,7 @@ export default function ProfilePage() {
       <div className="tabs">
         {(["info", "meas", "orders"] as const).map((t) => (
           <button key={t} className={`tab${tab === t ? " sel" : ""}`} onClick={() => setTab(t)}>
-            {t === "info" ? "👤 Info" : t === "meas" ? "📏 Measurements" : "📦 My Orders"}
+            {t === "info" ? "Info" : t === "meas" ? "Measurements" : "My Orders"}
           </button>
         ))}
       </div>

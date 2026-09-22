@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Digital Tailor Nagpur - Custom stitching, alteration & doorstep pickup for men and women.",
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂️</text></svg>",
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23330C4B'/><g fill='none' stroke='%23E3A88A' stroke-width='6' stroke-linecap='round'><circle cx='30' cy='30' r='9'/><circle cx='30' cy='70' r='9'/><path d='M37 35 73 68M37 65 73 32'/></g></svg>",
   },
 };
 

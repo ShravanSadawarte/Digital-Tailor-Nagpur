@@ -7,6 +7,7 @@ import { getSupabase } from "@/lib/supabase/client";
 import { useCart } from "@/lib/cart";
 import AuthModal, { type AuthMode } from "@/components/AuthModal";
 import AdminPasscode from "@/components/AdminPasscode";
+import { Icon } from "@/components/icons";
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -90,7 +91,7 @@ export default function Navbar() {
       <header className={`navbar${scrolled ? " scrolled" : ""}`}>
         <div className="container nav-inner">
           <Link href="/" className="logo">
-            <span className="logo-icon">✂️</span>
+            <span className="logo-icon"><Icon name="scissors" size={22} /></span>
             <span className="logo-text">
               Digital Tailor <small>Nagpur</small>
             </span>
@@ -111,12 +112,12 @@ export default function Navbar() {
 
           <div className="nav-actions">
             <Link href="/cart" className="cart-link" aria-label="Shopping bag">
-              🛍️{count > 0 && <span className="cart-count">{count}</span>}
+              <Icon name="bag" size={23} />{count > 0 && <span className="cart-count">{count}</span>}
             </Link>
             {email ? (
               <>
                 <Link href="/profile" className="user-email" title={email}>
-                  👋 {email}
+                  {email}
                 </Link>
                 <button className="btn btn-outline" onClick={logout}>
                   Logout
@@ -147,10 +148,10 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
-          <Link href="/cart" onClick={() => setOpen(false)}>🛍️ Bag ({count})</Link>
-          <Link href="/profile" onClick={() => setOpen(false)}>👤 My Profile</Link>
+          <Link href="/cart" onClick={() => setOpen(false)}>Bag ({count})</Link>
+          <Link href="/profile" onClick={() => setOpen(false)}>My Profile</Link>
           {isAdmin && (
-            <Link href="/admin" onClick={() => setOpen(false)}>⚙️ Admin</Link>
+            <Link href="/admin" onClick={() => setOpen(false)}>Admin</Link>
           )}
           <div className="mobile-actions">
             {email ? (

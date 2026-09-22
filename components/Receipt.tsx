@@ -1,5 +1,7 @@
 "use client";
 
+import { Icon } from "@/components/icons";
+
 export const STAGES = ["pending", "confirmed", "stitching", "ready", "delivered"];
 const STAGE_LABEL: Record<string, string> = {
   pending: "Placed",
@@ -17,10 +19,10 @@ export function payLabel(s: string) {
   const m: Record<string, string> = {
     pending: "Payment pending",
     awaiting_verification: "Payment verifying…",
-    verified: "Payment verified ✅",
+    verified: "Payment verified ✓",
     rejected: "Payment rejected — call the shop",
     paid_on_pickup: "Pay on pickup",
-    done: "Paid ✅",
+    done: "Paid ✓",
   };
   return m[s] || s;
 }
@@ -70,7 +72,7 @@ export function Receipt(props: {
           ✕
         </button>
         <div className="receipt-head">
-          <span className="logo-icon">✂️</span>
+          <span className="logo-icon"><Icon name="scissors" size={22} /></span>
           <div>
             <h2>{title}</h2>
             <small>Digital Tailor, Nagpur</small>
@@ -96,7 +98,7 @@ export function Receipt(props: {
         </div>
         <p className="pay-chip">{payLabel(pay)}</p>
         <small className="receipt-note">
-          Show this receipt at the shop or on delivery. Thank you! 🙏
+          Show this receipt at the shop or on delivery. Thank you!
         </small>
         <button className="btn btn-primary btn-block" onClick={onClose}>
           Done

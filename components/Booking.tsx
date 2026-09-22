@@ -40,7 +40,7 @@ export default function Booking({ userId }: Props) {
 
     const supabase = getSupabase();
     if (!supabase) {
-      setMsg("Booking noted! ✅ (demo — connect Supabase to save it)");
+      setMsg("Booking noted! (demo — connect Supabase to save it)");
       form.reset();
       return;
     }
@@ -53,7 +53,7 @@ export default function Booking({ userId }: Props) {
       setError(error.message);
       return;
     }
-    setMsg("Booking received! We will call you to confirm pickup. ✅");
+    setMsg("Booking received! We will call you to confirm pickup.");
     form.reset();
   };
 

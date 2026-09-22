@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { inr, shortId } from "@/components/Receipt";
+import { SERVICE_ICONS } from "@/components/icons";
 
 const SIZES = ["S", "M", "L", "XL", "XXL"];
 const TABS = ["products", "examples", "materials", "offers", "orders", "settings", "announcements", "content"] as const;
@@ -511,7 +512,9 @@ export default function AdminPage() {
             {[0, 1, 2].map((i) => (
               <div key={i} className="review-box">
                 <strong>Service {i + 1}</strong>
-                <label>Icon (emoji)<input value={content.services?.items?.[i]?.icon || ""} onChange={(e) => setCItem("services", i, "icon", e.target.value)} placeholder="👔" /></label>
+                <label>Icon<select value={content.services?.items?.[i]?.icon || "needle"} onChange={(e) => setCItem("services", i, "icon", e.target.value)}>
+                  {SERVICE_ICONS.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}
+                </select></label>
                 <label>Title<input value={content.services?.items?.[i]?.title || ""} onChange={(e) => setCItem("services", i, "title", e.target.value)} /></label>
                 <label>Text<textarea value={content.services?.items?.[i]?.text || ""} onChange={(e) => setCItem("services", i, "text", e.target.value)} rows={2} /></label>
               </div>

@@ -2,6 +2,7 @@
 
 import Reveal from "@/components/Reveal";
 import { useSiteContent } from "@/lib/content";
+import { ServiceIcon } from "@/components/icons";
 
 export default function Services() {
   const svc = useSiteContent<any>("services");
@@ -18,7 +19,7 @@ export default function Services() {
           {items.map((s: any, i: number) => (
             <Reveal key={s.title + i} delay={i * 90}>
               <div className="feature">
-                <div className="f-icon">{s.icon}</div>
+                <div className="f-icon"><ServiceIcon icon={s.icon || "needle"} /></div>
                 <h3>{s.title}</h3>
                 <p>{s.text}</p>
               </div>

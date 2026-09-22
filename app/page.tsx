@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
+import Marquee from "@/components/Marquee";
 import Services from "@/components/Services";
 import Booking from "@/components/Booking";
 import Contact from "@/components/Contact";
@@ -38,6 +39,7 @@ export default function Home() {
     <>
       <main id="home">
         <Hero onSignup={() => setAuthMode("signup")} />
+        <Marquee />
         <OffersStrip />
         <Services />
         <ShopPreview />

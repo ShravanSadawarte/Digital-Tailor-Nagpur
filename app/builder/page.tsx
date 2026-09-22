@@ -6,6 +6,7 @@ import { getSupabase } from "@/lib/supabase/client";
 import PageHero from "@/components/PageHero";
 import AuthModal, { type AuthMode } from "@/components/AuthModal";
 import { Receipt, inr, type ReceiptLine } from "@/components/Receipt";
+import { Icon, type IconName } from "@/components/icons";
 
 type Material = {
   id: string;
@@ -24,7 +25,7 @@ function OptCard(props: {
   selected: boolean;
   onClick: () => void;
   image: string | null;
-  emoji: string;
+  icon: IconName;
   name: string;
   sub: string;
 }) {
@@ -37,7 +38,7 @@ function OptCard(props: {
       {props.image ? (
         <Image src={props.image} alt={props.name} width={200} height={130} className="opt-img" />
       ) : (
-        <div className="opt-ph">{props.emoji}</div>
+        <div className="opt-ph"><Icon name={props.icon} size={40} /></div>
       )}
       <strong>{props.name}</strong>
       <small>{props.sub}</small>
@@ -186,7 +187,7 @@ export default function BuilderPage() {
         sub="Design your dream outfit step-by-step. Estimated price updates live."
       />
 
-      {designRef && <p className="design-ref">📌 Reference design: <strong>{designRef}</strong></p>}
+      {designRef && <p className="design-ref">Reference design: <strong>{designRef}</strong></p>}
 
       <div className="stepper">
         {STEPS.map((s, i) => (
@@ -201,14 +202,14 @@ export default function BuilderPage() {
           <>
             <h3>Choose your fabric</h3>
             <div className="pay-opts">
-              <label className="pay-opt"><input type="radio" checked={fabricMode === "shop"} onChange={() => setFabricMode("shop")} />🧵 From our shop</label>
+              <label className="pay-opt"><input type="radio" checked={fabricMode === "shop"} onChange={() => setFabricMode("shop")} />From our shop</label>
               <label className="pay-opt"><input type="radio" checked={fabricMode === "own"} onChange={() => setFabricMode("own")} />👝 I have my own cloth</label>
             </div>
             {fabricMode === "shop" ? (
               <div className="opt-grid">
                 {by("fabric").map((m) => (
                   <OptCard key={m.id} selected={fabricId === m.id} onClick={() => setFabricId(m.id)}
-                    image={m.image_url} emoji="🧵" name={m.name} sub={`${m.description || ""} ${m.price_addon ? `(+${inr(m.price_addon)})` : "(included)"}`} />
+                    image={m.image_url} icon="spool" name={m.name} sub={`${m.description || ""} ${m.price_addon ? `(+${inr(m.price_addon)})` : "(included)"}`} />
                 ))}
               </div>
             ) : (
@@ -223,7 +224,7 @@ export default function BuilderPage() {
             <div className="opt-grid">
               {by("neck_front").map((m) => (
                 <OptCard key={m.id} selected={neckF === m.id} onClick={() => setNeckF(m.id)}
-                  image={m.image_url} emoji="👚" name={m.name} sub={m.price_addon ? `+${inr(m.price_addon)}` : "Included"} />
+                  image={m.image_url} icon="neckline" name={m.name} sub={m.price_addon ? `+${inr(m.price_addon)}` : "Included"} />
               ))}
             </div>
           </>
@@ -235,7 +236,7 @@ export default function BuilderPage() {
             <div className="opt-grid">
               {by("neck_back").map((m) => (
                 <OptCard key={m.id} selected={neckB === m.id} onClick={() => setNeckB(m.id)}
-                  image={m.image_url} emoji="🎀" name={m.name} sub={m.price_addon ? `+${inr(m.price_addon)}` : "Included"} />
+                  image={m.image_url} icon="neckline" name={m.name} sub={m.price_addon ? `+${inr(m.price_addon)}` : "Included"} />
               ))}
             </div>
           </>
@@ -247,7 +248,7 @@ export default function BuilderPage() {
             <div className="opt-grid">
               {by("sleeve").map((m) => (
                 <OptCard key={m.id} selected={sleeve === m.id} onClick={() => setSleeve(m.id)}
-                  image={m.image_url} emoji="💪" name={m.name} sub={m.price_addon ? `+${inr(m.price_addon)}` : "Included"} />
+                  image={m.image_url} icon="sleeve" name={m.name} sub={m.price_addon ? `+${inr(m.price_addon)}` : "Included"} />
               ))}
             </div>
           </>
@@ -259,7 +260,7 @@ export default function BuilderPage() {
             <div className="opt-grid">
               {by("decorative").map((m) => (
                 <OptCard key={m.id} selected={decor.includes(m.id)} onClick={() => toggleDecor(m.id)}
-                  image={m.image_url} emoji="✨" name={m.name} sub={m.price_addon ? `+${inr(m.price_addon)}` : "Included"} />
+                    image={m.image_url} icon="spark" name={m.name} sub={m.price_addon ? `+${inr(m.price_addon)}` : "Included"} />
               ))}
             </div>
             <label>Anything of your own? (own lace, latkan, etc.)<textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} placeholder="Describe your own decorative materials" /></label>
@@ -278,8 +279,8 @@ export default function BuilderPage() {
             </div>
 
             <div className="pay-opts">
-              <label className="pay-opt"><input type="radio" checked={refMode === "measurement"} onChange={() => setRefMode("measurement")} />📏 Use measurements</label>
-              <label className="pay-opt"><input type="radio" checked={refMode === "reference_dress"} onChange={() => setRefMode("reference_dress")} />👗 Well-fitting reference dress</label>
+<label className="pay-opt"><input type="radio" checked={refMode === "measurement"} onChange={() => setRefMode("measurement")} />Use measurements</label>
+                <label className="pay-opt"><input type="radio" checked={refMode === "reference_dress"} onChange={() => setRefMode("reference_dress")} />Well-fitting reference dress</label>
             </div>
             {refMode === "measurement" ? (
               <>

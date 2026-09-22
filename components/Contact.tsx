@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getSupabase } from "@/lib/supabase/client";
+import { Icon } from "@/components/icons";
 
 export default function Contact() {
   const [msg, setMsg] = useState("");
@@ -20,7 +21,7 @@ export default function Contact() {
 
     const supabase = getSupabase();
     if (!supabase) {
-      setMsg("Thanks! We will call you back soon. ✅ (demo — connect Supabase to save)");
+      setMsg("Thanks! We will call you back soon. (demo — connect Supabase to save)");
       form.reset();
       return;
     }
@@ -35,7 +36,7 @@ export default function Contact() {
       setError(error.message);
       return;
     }
-    setMsg("Thanks! We will call you back soon. ✅");
+    setMsg("Thanks! We will call you back soon.");
     form.reset();
   };
 
@@ -50,17 +51,20 @@ export default function Contact() {
           </p>
           <ul className="contact-list">
             <li>
-              <strong>📍 Address:</strong> Shop 12, Main Road, Sitabuldi,
-              Nagpur 440012
+              <Icon name="pin" size={17} />
+              <span><strong>Address:</strong> Shop 12, Main Road, Sitabuldi, Nagpur 440012</span>
             </li>
             <li>
-              <strong>📞 Phone:</strong> +91 98765 43210
+              <Icon name="phone" size={17} />
+              <span><strong>Phone:</strong> +91 98765 43210</span>
             </li>
             <li>
-              <strong>✉️ Email:</strong> hello@digitaltailor.in
+              <Icon name="mail" size={17} />
+              <span><strong>Email:</strong> hello@digitaltailor.in</span>
             </li>
             <li>
-              <strong>⏰ Hours:</strong> Mon–Sat, 10am – 8pm
+              <Icon name="clock" size={17} />
+              <span><strong>Hours:</strong> Mon–Sat, 10am – 8pm</span>
             </li>
           </ul>
         </div>

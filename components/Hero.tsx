@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Reveal from "@/components/Reveal";
 import { useSiteContent } from "@/lib/content";
 
@@ -15,6 +16,33 @@ const AVATARS = [
   { initial: "P", bg: "#E3A88A", color: "#330C4B" },
   { initial: "A", bg: "#51017C", color: "#fff" },
 ];
+
+/** Animated number: counts 0 → target once mounted (e.g. "5000+", "4.9★", "48hr"). */
+function Count({ text }: { text: string }) {
+  const [out, setOut] = useState(text);
+  useEffect(() => {
+    const m = String(text).match(/^([\d.]+)(.*)$/);
+    if (!m) {
+      setOut(text);
+      return;
+    }
+    const target = parseFloat(m[1]);
+    const suffix = m[2];
+    const decimals = (m[1].split(".")[1] || "").length;
+    const dur = 1500;
+    let raf = 0;
+    const t0 = performance.now() + 350;
+    const tick = (t: number) => {
+      const p = Math.min(1, Math.max(0, (t - t0) / dur));
+      const e = 1 - Math.pow(1 - p, 3);
+      setOut((target * e).toFixed(decimals) + suffix);
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [text]);
+  return <>{out}</>;
+}
 
 export default function Hero({ onSignup }: Props) {
   const hero = useSiteContent<any>("hero");
@@ -132,19 +160,19 @@ export default function Hero({ onSignup }: Props) {
         <Reveal delay={220}>
         <div className="hero-stats-bar">
           <div>
-            <strong>{hero.orders}</strong>
+            <strong><Count text={hero.orders} /></strong>
             <span>{hero.orders_label}</span>
           </div>
           <div>
-            <strong>{hero.rating}</strong>
+            <strong><Count text={hero.rating} /></strong>
             <span>{hero.rating_label}</span>
           </div>
           <div>
-            <strong>{hero.delivery}</strong>
+            <strong><Count text={hero.delivery} /></strong>
             <span>{hero.delivery_label}</span>
           </div>
           <div>
-            <strong>{hero.express}</strong>
+            <strong><Count text={hero.express} /></strong>
             <span>{hero.express_label}</span>
           </div>
         </div>

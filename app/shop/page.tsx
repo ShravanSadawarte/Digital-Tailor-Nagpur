@@ -8,6 +8,7 @@ import { useCart } from "@/lib/cart";
 import { inr } from "@/components/Receipt";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import { MonoMark } from "@/components/icons";
 
 type Product = {
   id: string;
@@ -126,7 +127,7 @@ export default function ShopPage() {
                   className="product-img"
                 />
               ) : (
-                <div className="product-ph">👗</div>
+                <div className="product-ph"><MonoMark size={76} /></div>
               )}
             </div>
             <div className="product-cat">{p.categories?.name || "Boutique"}</div>

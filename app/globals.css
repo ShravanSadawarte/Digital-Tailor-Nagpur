@@ -669,6 +669,75 @@ body {
 .tf-mini-photos .tf-img, .tf-mini-photos .tf-ph { height: 110px; }
 .tf-mini-photos .tf-ph { font-size: 30px; }
 
+/* ================= Classic iconography, motion & effects ================= */
+.icon { display: inline-block; vertical-align: -3px; flex: none; }
+.logo-icon .icon { width: 22px; height: 22px; }
+.f-icon .icon { width: 34px; height: 34px; color: var(--eminence); }
+.opt-ph .icon { width: 40px; height: 40px; color: var(--eminence); }
+.cart-ph .icon { width: 28px; height: 28px; color: var(--eminence); }
+.foot-col .icon { width: 16px; height: 16px; margin-right: 8px; vertical-align: -3px; color: var(--fawn); }
+.foot-col li { display: flex; align-items: flex-start; }
+.foot-col li .icon { margin-top: 3px; }
+.contact-list .icon { width: 17px; height: 17px; margin-right: 8px; vertical-align: -3px; color: var(--eminence); }
+.contact-list li { display: flex; align-items: flex-start; }
+.contact-list li .icon { margin-top: 4px; }
+
+/* DT monogram medallion (image placeholder) */
+.mono-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.mono {
+  display: grid; place-items: center; border-radius: 50%;
+  font-family: var(--font-display), Georgia, serif; font-weight: 700; letter-spacing: 1px;
+  color: var(--fawn);
+  background: radial-gradient(circle at 35% 30%, var(--purple-iris), var(--deep-purple) 75%);
+  border: 2px solid rgba(227, 168, 138, .55);
+  box-shadow: inset 0 0 0 4px rgba(227, 168, 138, .18), 0 8px 22px rgba(51, 12, 75, .25);
+}
+.mono-label { font-size: 11px; font-weight: 700; letter-spacing: .4px; }
+.product-ph, .tf-ph, .cart-ph { background: linear-gradient(135deg, var(--plum-mist), var(--fawn-soft)); }
+
+/* Scissors ornament divider */
+.ornament { display: flex; align-items: center; gap: 14px; margin: 6px auto 0; max-width: 420px; color: var(--sunset); opacity: .85; }
+.ornament span { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--fawn-line)); }
+.ornament span:last-child { background: linear-gradient(90deg, var(--fawn-line), transparent); }
+
+/* Classic ticker ribbon */
+.marquee {
+  background: linear-gradient(90deg, var(--deep-purple), var(--eminence), var(--deep-purple));
+  color: var(--fawn); overflow: hidden; white-space: nowrap;
+  border-top: 1px solid rgba(227, 168, 138, .4);
+  border-bottom: 1px solid rgba(227, 168, 138, .4);
+  padding: 11px 0;
+}
+.marquee-track { display: inline-flex; gap: 0; animation: marquee 30s linear infinite; will-change: transform; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee-item {
+  font-family: var(--font-display), Georgia, serif; font-style: italic;
+  font-size: 15px; letter-spacing: 1.5px; padding: 0 26px;
+}
+.marquee-item i { font-style: normal; font-size: 10px; margin-left: 26px; opacity: .7; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Button sheen sweep */
+.btn-primary { overflow: hidden; }
+.btn-primary::after {
+  content: ""; position: absolute; top: 0; left: -70%;
+  width: 45%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .5), transparent);
+  transform: skewX(-20deg); transition: left .55s var(--ease-out);
+  pointer-events: none;
+}
+.btn-primary:hover::after { left: 135%; }
+
+/* Slow hero ambience drift */
+.hero-v2 { position: relative; }
+.hero-v2::after {
+  content: ""; position: absolute; inset: -12%; pointer-events: none;
+  background: radial-gradient(560px 320px at 68% 18%, rgba(227, 168, 138, .16), transparent 60%);
+  animation: glow-drift 16s ease-in-out infinite alternate;
+}
+.hero-v2 .container { position: relative; z-index: 1; }
+@keyframes glow-drift { from { transform: translate(-3%, -2%); } to { transform: translate(3%, 3%); } }
+
 /* Respect users who prefer no motion */
 @media (prefers-reduced-motion: reduce) {  html { scroll-behavior: auto; }
   *, *::before, *::after {

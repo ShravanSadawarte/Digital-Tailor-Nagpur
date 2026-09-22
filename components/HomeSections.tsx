@@ -7,6 +7,7 @@ import { getSupabase } from "@/lib/supabase/client";
 import { inr } from "@/components/Receipt";
 import Reveal from "@/components/Reveal";
 import { useSiteContent } from "@/lib/content";
+import { MonoMark } from "@/components/icons";
 
 function offPct(price: number, mrp?: number | null) {
   if (!mrp || mrp <= price) return 0;
@@ -52,7 +53,7 @@ export function ShopPreview() {
                 {p.images?.[0] ? (
                   <Image src={p.images[0]} alt={p.name} width={400} height={260} className="product-img" />
                 ) : (
-                  <div className="product-ph">👗</div>
+                  <div className="product-ph"><MonoMark size={76} /></div>
                 )}
               </div>
               <h3>{p.name}</h3>
@@ -106,7 +107,7 @@ export function TransformationsPreview() {
                     {r.before_image ? (
                       <Image src={r.before_image} alt="Before" width={200} height={140} className="tf-img" />
                     ) : (
-                      <div className="tf-ph">🧵</div>
+                      <div className="tf-ph"><MonoMark size={54} label="Raw" /></div>
                     )}
                     <span className="tf-tag">Before</span>
                   </div>
@@ -115,16 +116,16 @@ export function TransformationsPreview() {
                     {r.after_image ? (
                       <Image src={r.after_image} alt="After" width={200} height={140} className="tf-img" />
                     ) : (
-                      <div className="tf-ph">👗</div>
+                      <div className="tf-ph"><MonoMark size={54} label="Stitched" /></div>
                     )}
                     <span className="tf-tag tag-after">After</span>
                   </div>
                 </div>
               ) : (
-                <div className="tf-mini-imgs">
-                  <span>🧵</span>
+                <div className="tf-mini-imgs tf-mini-words">
+                  <span>Before</span>
                   <span className="tf-arrow">→</span>
-                  <span>👗</span>
+                  <span>After</span>
                 </div>
               )}
               <h3>{r.title}</h3>
@@ -174,7 +175,7 @@ export function Craftsman() {
             // eslint-disable-next-line @next/next/no-img-element
             <img src="/father.jpg" alt="Master tailor at work" onError={() => setImgOk(false)} />
           ) : (
-            <div className="craftsman-ph">✂️<small>Add photo as public/father.jpg</small></div>
+            <div className="craftsman-ph"><MonoMark size={96} label="Masterji · 25 yrs" /></div>
           )}
           <div className="craftsman-badge">25+ yrs of fitting</div>
         </Reveal>
@@ -188,9 +189,9 @@ export function Craftsman() {
             last-minute function alterations that simply had to be perfect.
           </p>
           <ul className="contact-list">
-            <li><strong>📏 Fitting-first:</strong> every outfit checked twice before delivery</li>
-            <li><strong>🤝 Honest pricing:</strong> quoted upfront, no surprises later</li>
-            <li><strong>⏰ On-time, every time:</strong> function-date delivery you can trust</li>
+            <li><strong>Fitting-first:</strong> every outfit checked twice before delivery</li>
+            <li><strong>Honest pricing:</strong> quoted upfront, no surprises later</li>
+            <li><strong>On-time, every time:</strong> function-date delivery you can trust</li>
           </ul>
           <a href="#contact" className="btn btn-primary btn-lg" style={{ marginTop: 16 }}>
             Visit the shop
@@ -228,7 +229,7 @@ export function OffersStrip() {
       <div className="container">
         <Reveal>
         <span className="eyebrow">Limited time</span>
-        <h2>🎁 Offers &amp; Promotions</h2>
+        <h2>Offers &amp; Promotions</h2>
         </Reveal>
         <div className="offer-grid">
           {offers.map((o, i) => (
@@ -237,7 +238,7 @@ export function OffersStrip() {
               {o.image_url ? (
                 <Image src={o.image_url} alt={o.title} width={500} height={220} className="offer-img" />
               ) : (
-                <div className="offer-ph">🎁</div>
+                <div className="offer-ph"><MonoMark size={72} /></div>
               )}
               <h3>{o.title}</h3>
               <p className="muted">{o.description}</p>

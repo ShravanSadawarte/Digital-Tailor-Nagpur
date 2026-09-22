@@ -23,9 +23,9 @@ export const CONTENT_DEFAULTS: Record<string, any> = {
     title: "Our Services",
     sub: "Simple pricing, expert masterjis, perfect finishing.",
     items: [
-      { icon: "👔", title: "Custom Stitching", text: "Shirts, pants, suits, blouses & kurtis stitched to your exact measurements." },
-      { icon: "📏", title: "Alteration & Repair", text: "Fitting correction, length adjustment, zip replacement in 24 hours." },
-      { icon: "🚚", title: "Doorstep Service", text: "Free pickup & delivery across Nagpur. Live order tracking on WhatsApp." },
+      { icon: "needle", title: "Custom Stitching", text: "Shirts, pants, suits, blouses & kurtis stitched to your exact measurements." },
+      { icon: "ruler", title: "Alteration & Repair", text: "Fitting correction, length adjustment, zip replacement in 24 hours." },
+      { icon: "truck", title: "Doorstep Service", text: "Free pickup & delivery across Nagpur. Live order tracking on WhatsApp." },
     ],
   },
   sections: {

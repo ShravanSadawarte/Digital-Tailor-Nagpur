@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getSupabase } from "@/lib/supabase/client";
 
 // Demo bar — stays live until the admin publishes announcements from /admin → Top Bar.
-const DEMO = "🚚 Free doorstep pickup across Nagpur • No advance payment • 48-hr delivery";
+const DEMO = "Free doorstep pickup across Nagpur • No advance payment • 48-hr delivery";
 
 export default function Announcement() {
   const [open, setOpen] = useState(true);

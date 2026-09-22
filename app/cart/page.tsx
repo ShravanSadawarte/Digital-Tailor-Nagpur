@@ -6,6 +6,7 @@ import { getSupabase } from "@/lib/supabase/client";
 import { useCart } from "@/lib/cart";
 import AuthModal, { type AuthMode } from "@/components/AuthModal";
 import { Receipt, inr, type ReceiptLine } from "@/components/Receipt";
+import { Icon } from "@/components/icons";
 
 export default function CartPage() {
   const { items, setQty, remove, clear, total } = useCart();
@@ -120,7 +121,7 @@ export default function CartPage() {
                 {i.image ? (
                   <Image src={i.image} alt={i.name} width={80} height={80} className="cart-thumb" />
                 ) : (
-                  <div className="cart-ph">👗</div>
+                  <div className="cart-ph"><Icon name="bag" size={28} /></div>
                 )}
                 <div className="cart-info">
                   <strong>{i.name}</strong>

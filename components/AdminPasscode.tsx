@@ -31,7 +31,7 @@ export default function AdminPasscode({ onSuccess }: { onSuccess: () => void }) 
   return (
     <div className="admin-pass">
       <form onSubmit={submit}>
-        <strong>🔐 Extra verification</strong>
+        <strong>Extra verification</strong>
         <p>Enter your admin passcode to unlock management.</p>
         <div className="admin-pass-row">
           <input
