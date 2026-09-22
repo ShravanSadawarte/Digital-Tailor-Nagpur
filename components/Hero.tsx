@@ -38,15 +38,15 @@ function Count({ text }: { text: string }) {
 
 export default function Hero({ onSignup }: Props) {
   const hero = useSiteContent<any>("hero");
-  const scrollToBooking = () => {
-    document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <section className="hero hero-v2">
       <div className="container hero-grid">
         <Reveal className="hero-copy">
-          <a href="#booking" className="hero-pill">
+          <a href="#contact" className="hero-pill">
             <span className="pulse-dot" />
             Now accepting orders in Nagpur
             <span className="pill-arrow">→</span>
@@ -66,10 +66,10 @@ export default function Hero({ onSignup }: Props) {
 
           <div className="hero-ctas">
             <button
-              className="btn btn-primary btn-lg hero-cta"
-              onClick={scrollToBooking}
+              className="btn btn-primary btn-block"
+              onClick={scrollToContact}
             >
-              Book free pickup <span aria-hidden>→</span>
+              Schedule pickup
             </button>
             <a href="#services" className="btn btn-outline btn-lg">
               Explore services
