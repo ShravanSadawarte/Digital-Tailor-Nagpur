@@ -1,12 +1,15 @@
 import { Fragment } from "react";
 
 const ITEMS = [
-  "Custom Stitching",
-  "Doorstep Pickup",
-  "48-Hour Delivery",
-  "24-Hour Alterations",
-  "Perfect Fitting",
-  "Honest Pricing",
+  "Kurti",
+  "Short Kurti",
+  "Plazo",
+  "Patiala",
+  "Salwar Suit",
+  "Gown",
+  "One Piece",
+  "Two Piece",
+  "Three Piece",
 ];
 
 /** Slow classic ticker ribbon. */
