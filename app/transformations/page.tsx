@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getSupabase } from "@/lib/supabase/client";
 import PageHero from "@/components/PageHero";
-import { MonoMark } from "@/components/icons";
+import { MonoMark, Icon } from "@/components/icons";
 
 type Example = {
   id: string;
@@ -47,7 +47,7 @@ export default function TransformationsPage() {
                 {r.before_image ? (
                   <Image src={r.before_image} alt="Before" width={300} height={220} className="tf-img" />
                 ) : (
-                  <div className="tf-ph"><MonoMark size={64} label="Raw material" /></div>
+                  <div className="tf-empty"><Icon name="scissors" size={28} /><small>Raw material</small></div>
                 )}
                 <span className="tf-tag">Before</span>
               </div>
@@ -56,7 +56,7 @@ export default function TransformationsPage() {
                 {r.after_image ? (
                   <Image src={r.after_image} alt="After" width={300} height={220} className="tf-img" />
                 ) : (
-                  <div className="tf-ph"><MonoMark size={64} label="Finished dress" /></div>
+                  <div className="tf-empty"><Icon name="dress" size={28} /><small>Finished dress</small></div>
                 )}
                 <span className="tf-tag tag-after">After</span>
               </div>

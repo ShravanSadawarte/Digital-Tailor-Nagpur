@@ -7,7 +7,7 @@ import { getSupabase } from "@/lib/supabase/client";
 import { inr } from "@/components/Receipt";
 import Reveal from "@/components/Reveal";
 import { useSiteContent } from "@/lib/content";
-import { MonoMark } from "@/components/icons";
+import { MonoMark, Icon } from "@/components/icons";
 
 function offPct(price: number, mrp?: number | null) {
   if (!mrp || mrp <= price) return 0;
@@ -106,7 +106,7 @@ export function TransformationsPreview() {
                   {r.before_image ? (
                     <Image src={r.before_image} alt="Before" width={200} height={140} className="tf-img" />
                   ) : (
-                    <div className="tf-ph"><MonoMark size={52} label="Raw" /></div>
+                    <div className="tf-empty"><Icon name="scissors" size={28} /><small>Raw</small></div>
                   )}
                   <span className="tf-tag">Before</span>
                 </div>
@@ -115,7 +115,7 @@ export function TransformationsPreview() {
                   {r.after_image ? (
                     <Image src={r.after_image} alt="After" width={200} height={140} className="tf-img" />
                   ) : (
-                    <div className="tf-ph"><MonoMark size={52} label="Stitched" /></div>
+                    <div className="tf-empty"><Icon name="dress" size={28} /><small>Stitched</small></div>
                   )}
                   <span className="tf-tag tag-after">After</span>
                 </div>
