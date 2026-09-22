@@ -43,7 +43,7 @@ export default function Footer() {
           <div className="foot-col">
             <h4>Visit Us</h4>
             <ul>
-              <li><Icon name="pin" size={16} />Shop 12, Main Road, Sitabuldi, Nagpur 440012</li>
+              <li><Icon name="pin" size={16} />26B, Hanuman Society, Vaishali Nagar, Nagpur 440017</li>
               <li><Icon name="phone" size={16} />+91 98765 43210</li>
               <li><Icon name="mail" size={16} />hello@digitaltailor.in</li>
               <li><Icon name="clock" size={16} />Mon–Sat, 10am – 8pm</li>

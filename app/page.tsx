@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
+import Visit from "@/components/Visit";
 import Marquee from "@/components/Marquee";
 import Services from "@/components/Services";
 import Booking from "@/components/Booking";
@@ -46,6 +47,7 @@ export default function Home() {
         <TransformationsPreview />
         <BuilderCTA />
         <Craftsman />
+        <Visit />
         <Booking userId={userId} />
         <Contact />
       </main>

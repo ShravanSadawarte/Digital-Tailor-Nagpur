@@ -52,7 +52,7 @@ export default function Contact() {
           <ul className="contact-list">
             <li>
               <Icon name="pin" size={17} />
-              <span><strong>Address:</strong> Shop 12, Main Road, Sitabuldi, Nagpur 440012</span>
+              <span><strong>Address:</strong> 26B, Hanuman Society, Vaishali Nagar, Nagpur, Maharashtra 440017</span>
             </li>
             <li>
               <Icon name="phone" size={17} />

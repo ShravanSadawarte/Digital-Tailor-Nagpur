@@ -728,8 +728,7 @@ body {
 }
 .btn-primary:hover::after { left: 135%; }
 
-/* Slow hero ambience drift */
-.hero-v2 { position: relative; }
+/* Slow hero ambience drift */.hero-v2 { position: relative; }
 .hero-v2::after {
   content: ""; position: absolute; inset: -12%; pointer-events: none;
   background: radial-gradient(560px 320px at 68% 18%, rgba(227, 168, 138, .16), transparent 60%);
@@ -737,6 +736,40 @@ body {
 }
 .hero-v2 .container { position: relative; z-index: 1; }
 @keyframes glow-drift { from { transform: translate(-3%, -2%); } to { transform: translate(3%, 3%); } }
+
+/* Hero boutique location line */
+.hero-loc {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--fawn); font-size: 14px; font-weight: 600;
+  margin-bottom: 22px; transition: color .18s;
+}
+.hero-loc:hover { color: #fff; }
+.hero-loc .icon { color: var(--fawn); }
+
+/* Visit the boutique section */
+.visit-card {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 28px; flex-wrap: wrap;
+  background: linear-gradient(120deg, var(--fawn-soft), var(--cream));
+  border: 1px solid var(--fawn-line); border-radius: 22px;
+  padding: clamp(26px, 4.5vw, 42px);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 26px;
+}
+.visit-card h2 { margin: 10px 0 10px; }
+.visit-addr {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: clamp(17px, 2.4vw, 21px); font-weight: 700; color: var(--ink);
+  margin: 0 0 10px; line-height: 1.5;
+}
+.visit-addr .icon { color: var(--sunset); margin-top: 4px; }
+.visit-side { display: grid; gap: 14px; justify-items: start; }
+.visit-hours {
+  display: inline-flex; align-items: center; gap: 8px; margin: 0;
+  font-size: 14.5px; font-weight: 700; color: var(--eminence);
+  background: #fff; border: 1px solid var(--fawn-line);
+  padding: 9px 16px; border-radius: 20px;
+}
 
 /* Respect users who prefer no motion */
 @media (prefers-reduced-motion: reduce) {  html { scroll-behavior: auto; }

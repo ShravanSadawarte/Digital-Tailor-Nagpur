@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Reveal from "@/components/Reveal";
 import { useSiteContent } from "@/lib/content";
+import { Icon } from "@/components/icons";
 
 type Props = {
   onSignup: () => void;
@@ -87,6 +88,15 @@ export default function Hero({ onSignup }: Props) {
           <button className="hero-signup-link" onClick={onSignup}>
             New here? Create a free account
           </button>
+
+          <a
+            className="hero-loc"
+            href="https://www.google.com/maps/search/?api=1&query=26B%2C%20Hanuman%20Society%2C%20Vaishali%20Nagar%2C%20Nagpur%2C%20Maharashtra%20440017"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="pin" size={15} /> 26B, Hanuman Society, Vaishali Nagar, Nagpur 440017
+          </a>
 
           <div className="hero-trust">
             <div className="avatars">
