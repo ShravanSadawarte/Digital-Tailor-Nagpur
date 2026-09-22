@@ -697,6 +697,29 @@ body {
   border-radius: 50%; font-size: 14px;
 }
 
+/* Homepage transformation cards — reference style */
+.tf-mini {
+  background: #fff; border-radius: 18px; padding: 20px;
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column;
+}
+.tf-mini .tf-mini-photos .tf-empty {
+  height: 108px; background: #FDF6EC;
+  border: 1px solid #E4C7AC; box-shadow: none;
+}
+.tf-mini .tf-mini-photos .tf-empty .icon { color: #6E3A78; }
+.tf-mini .tf-mini-photos .tf-arrow {
+  width: auto; height: auto; background: none; border: none;
+  color: var(--sunset); font-size: 19px; font-weight: 800;
+}
+.tf-mini .tf-type { margin-bottom: 6px; }
+.tf-mini h3 {
+  margin: 2px 0 8px; font-size: 22px; line-height: 1.25;
+  font-family: var(--font-display), Georgia, serif; font-weight: 700;
+}
+.tf-mini p { font-size: 14.5px; color: var(--muted); margin: 0; line-height: 1.6; }
+.tf-mini .tf-cta { margin-top: 16px; }
+
 /* ================= Classic iconography, motion & effects ================= */
 .icon { display: inline-block; vertical-align: -3px; flex: none; }
 .logo-icon .icon { width: 22px; height: 22px; }
