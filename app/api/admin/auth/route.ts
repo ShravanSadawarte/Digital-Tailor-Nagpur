@@ -25,7 +25,7 @@ export async function GET() {
 // POST { action: "logout" } → clears admin cookie
 export async function POST(req: Request) {
   const { action, code } = await req.json().catch(() => ({}));
-  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
 
   if (action === "logout") {
     const res = NextResponse.json({ ok: true });
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
   if (!adminEmail || adminEmail.includes("example.com"))
     return NextResponse.json({ adminRequired: false });
 
-  const email = await getSessionEmail();
+  const email = (await getSessionEmail())?.trim().toLowerCase();
   if (!email || email !== adminEmail)
     return NextResponse.json({ adminRequired: false });
 

@@ -26,10 +26,10 @@ export async function isAdminRequest(): Promise<{
   ok: boolean;
   email?: string;
 }> {
-  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
   if (!adminEmail || adminEmail.includes("example.com"))
     return { ok: false };
-  const email = await getSessionEmail();
+  const email = (await getSessionEmail())?.trim().toLowerCase();
   if (!email || email !== adminEmail) return { ok: false };
   const jar = await cookies();
   if (jar.get(ADMIN_COOKIE)?.value !== adminCookieValue(adminEmail))
