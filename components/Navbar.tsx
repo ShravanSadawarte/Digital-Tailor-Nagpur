@@ -115,14 +115,9 @@ export default function Navbar() {
               <Icon name="bag" size={23} />{count > 0 && <span className="cart-count">{count}</span>}
             </Link>
             {email ? (
-              <>
-                <Link href="/profile" className="user-email" title={email}>
-                  {email}
-                </Link>
-                <button className="btn btn-outline" onClick={logout}>
-                  Logout
-                </button>
-              </>
+              <Link href="/profile" className="profile-icon" aria-label="My profile" title={email}>
+                <Icon name="user" size={22} />
+              </Link>
             ) : (
               <>
                 <button className="btn btn-outline" onClick={() => setAuthMode("login")}>
@@ -149,8 +144,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link href="/cart" onClick={() => setOpen(false)}>Bag ({count})</Link>
-          <Link href="/profile" onClick={() => setOpen(false)}>My Profile</Link>
-          {isAdmin && (
+          <Link href="/profile" onClick={() => setOpen(false)}>My Profile</Link>          {isAdmin && (
             <Link href="/admin" onClick={() => setOpen(false)}>Admin</Link>
           )}
           <div className="mobile-actions">

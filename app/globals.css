@@ -851,6 +851,16 @@ body {
   padding: 9px 16px; border-radius: 20px;
 }
 
+/* Profile icon button (navbar) */
+.profile-icon {
+  width: 42px; height: 42px; border-radius: 50%;
+  display: grid; place-items: center; color: #fff;
+  background: linear-gradient(135deg, var(--eminence), var(--purple-iris));
+  box-shadow: 0 6px 16px rgba(81, 1, 124, .4);
+  transition: transform .18s var(--ease-out), box-shadow .18s;
+}
+.profile-icon:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(81, 1, 124, .5); }
+
 /* Respect users who prefer no motion */
 @media (prefers-reduced-motion: reduce) {  html { scroll-behavior: auto; }
   *, *::before, *::after {

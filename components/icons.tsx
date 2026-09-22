@@ -16,7 +16,8 @@ export type IconName =
   | "phone"
   | "mail"
   | "clock"
-  | "check";
+  | "check"
+  | "user";
 
 const PATHS: Record<IconName, React.ReactNode> = {
   scissors: (
@@ -108,6 +109,12 @@ const PATHS: Record<IconName, React.ReactNode> = {
     </>
   ),
   check: <path d="m4.5 12.5 5 5 10-11" />,
+  user: (
+    <>
+      <circle cx="12" cy="8" r="3.6" />
+      <path d="M4.8 20c1.4-3.4 4.2-5 7.2-5s5.8 1.6 7.2 5" />
+    </>
+  ),
 };
 
 /** Classic thin-stroke line icon. */
