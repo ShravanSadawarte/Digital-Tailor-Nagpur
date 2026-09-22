@@ -1,5 +1,16 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces } from "next/font/google";
+import { CartProvider } from "@/lib/cart";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
+
+const display = Fraunces({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   title: "Digital Tailor Nagpur - Home",
@@ -11,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#8e9aaf",
+  themeColor: "#330C4B",
 };
 
 export default function RootLayout({
@@ -21,7 +32,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={display.variable}>
+        <CartProvider>
+          <Navbar />
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }

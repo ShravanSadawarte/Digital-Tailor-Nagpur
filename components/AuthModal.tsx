@@ -36,11 +36,20 @@ export default function AuthModal({ mode, onClose }: Props) {
     setLoading(true);
     try {
       if (isSignup) {
-        const { error } = await supabase.auth.signUp({ email, password });
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+        });
         if (error) throw error;
-        setNotice(
-          "Account created! Check your email to confirm, then log in. ✅"
-        );
+        if (data.session) {
+          // Email confirmation is OFF — user is logged in immediately.
+          setEmail("");
+          setPassword("");
+          onClose();
+        } else {
+          // Email confirmation is ON — user must confirm first.
+          setNotice("Account created! Check your email to confirm. ✅");
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
