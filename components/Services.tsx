@@ -1,27 +1,22 @@
 "use client";
 
 import Reveal from "@/components/Reveal";
-
-const ITEMS = [
-  { icon: "👔", title: "Custom Stitching", text: "Shirts, pants, suits, blouses & kurtis stitched to your exact measurements." },
-  { icon: "📏", title: "Alteration & Repair", text: "Fitting correction, length adjustment, zip replacement in 24 hours." },
-  { icon: "🚚", title: "Doorstep Service", text: "Free pickup & delivery across Nagpur. Live order tracking on WhatsApp." },
-];
+import { useSiteContent } from "@/lib/content";
 
 export default function Services() {
+  const svc = useSiteContent<any>("services");
+  const items = Array.isArray(svc.items) ? svc.items : [];
   return (
     <section id="services" className="section">
       <div className="container">
         <Reveal>
-          <span className="eyebrow">What we do</span>
-          <h2>Our Services</h2>
-          <p className="muted">
-            Simple pricing, expert masterjis, perfect finishing.
-          </p>
+          <span className="eyebrow">{svc.eyebrow}</span>
+          <h2>{svc.title}</h2>
+          <p className="muted">{svc.sub}</p>
         </Reveal>
         <div className="grid3">
-          {ITEMS.map((s, i) => (
-            <Reveal key={s.title} delay={i * 90}>
+          {items.map((s: any, i: number) => (
+            <Reveal key={s.title + i} delay={i * 90}>
               <div className="feature">
                 <div className="f-icon">{s.icon}</div>
                 <h3>{s.title}</h3>

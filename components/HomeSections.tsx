@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getSupabase } from "@/lib/supabase/client";
 import { inr } from "@/components/Receipt";
 import Reveal from "@/components/Reveal";
+import { useSiteContent } from "@/lib/content";
 
 function offPct(price: number, mrp?: number | null) {
   if (!mrp || mrp <= price) return 0;
@@ -14,6 +15,7 @@ function offPct(price: number, mrp?: number | null) {
 
 export function ShopPreview() {
   const [products, setProducts] = useState<any[]>([]);
+  const sec = useSiteContent<any>("sections");
   useEffect(() => {
     getSupabase()
       ?.from("products")
@@ -30,9 +32,9 @@ export function ShopPreview() {
         <Reveal>
         <div className="sec-head">
           <div>
-            <span className="eyebrow">Ready to wear</span>
-            <h2>Shop Collection</h2>
-            <p className="muted">Ready-made outfits in sizes S to XXL.</p>
+            <span className="eyebrow">{sec.shop_eyebrow}</span>
+            <h2>{sec.shop_title}</h2>
+            <p className="muted">{sec.shop_sub}</p>
           </div>
           <Link href="/shop" className="btn btn-outline">
             View all →
@@ -69,6 +71,7 @@ export function ShopPreview() {
 
 export function TransformationsPreview() {
   const [rows, setRows] = useState<any[]>([]);
+  const sec = useSiteContent<any>("sections");
   useEffect(() => {
     getSupabase()
       ?.from("transformation_examples")
@@ -84,9 +87,9 @@ export function TransformationsPreview() {
         <Reveal>
         <div className="sec-head">
           <div>
-            <span className="eyebrow">Upcycle</span>
-            <h2>Raw → Best</h2>
-            <p className="muted">Your old sarees, reborn as new favourites.</p>
+            <span className="eyebrow">{sec.tf_eyebrow}</span>
+            <h2>{sec.tf_title}</h2>
+            <p className="muted">{sec.tf_sub}</p>
           </div>
           <Link href="/transformations" className="btn btn-outline">
             See all →
@@ -97,11 +100,33 @@ export function TransformationsPreview() {
           {rows.map((r, i) => (
             <Reveal key={r.id} delay={Math.min(i, 2) * 90}>
             <Link href="/transformations" className="feature tf-mini">
-              <div className="tf-mini-imgs">
-                <span>🧵</span>
-                <span className="tf-arrow">→</span>
-                <span>👗</span>
-              </div>
+              {r.before_image || r.after_image ? (
+                <div className="tf-imgs tf-mini-photos">
+                  <div className="tf-side">
+                    {r.before_image ? (
+                      <Image src={r.before_image} alt="Before" width={200} height={140} className="tf-img" />
+                    ) : (
+                      <div className="tf-ph">🧵</div>
+                    )}
+                    <span className="tf-tag">Before</span>
+                  </div>
+                  <span className="tf-arrow">→</span>
+                  <div className="tf-side">
+                    {r.after_image ? (
+                      <Image src={r.after_image} alt="After" width={200} height={140} className="tf-img" />
+                    ) : (
+                      <div className="tf-ph">👗</div>
+                    )}
+                    <span className="tf-tag tag-after">After</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="tf-mini-imgs">
+                  <span>🧵</span>
+                  <span className="tf-arrow">→</span>
+                  <span>👗</span>
+                </div>
+              )}
               <h3>{r.title}</h3>
               <p>{r.description}</p>
             </Link>

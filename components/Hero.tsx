@@ -1,6 +1,7 @@
 "use client";
 
 import Reveal from "@/components/Reveal";
+import { useSiteContent } from "@/lib/content";
 
 type Props = {
   onSignup: () => void;
@@ -16,6 +17,7 @@ const AVATARS = [
 ];
 
 export default function Hero({ onSignup }: Props) {
+  const hero = useSiteContent<any>("hero");
   const scrollToBooking = () => {
     document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -73,9 +75,9 @@ export default function Hero({ onSignup }: Props) {
             </div>
             <div className="trust-text">
               <div className="stars">
-                ★★★★★ <strong>4.9</strong>
+                ★★★★★ <strong>{hero.score}</strong>
               </div>
-              <span>Loved by 5,000+ customers in Nagpur</span>
+              <span>{hero.customers}</span>
             </div>
           </div>
         </Reveal>
@@ -109,8 +111,8 @@ export default function Hero({ onSignup }: Props) {
 
           <div className="float-card float-reviews">
             <div className="stars">★★★★★</div>
-            <strong>4.9 / 5</strong>
-            <span>2,300+ happy reviews</span>
+            <strong>{hero.score} / 5</strong>
+            <span>{hero.reviews}</span>
           </div>
 
           <div className="float-card float-order">
@@ -130,20 +132,20 @@ export default function Hero({ onSignup }: Props) {
         <Reveal delay={220}>
         <div className="hero-stats-bar">
           <div>
-            <strong>5000+</strong>
-            <span>Orders delivered</span>
+            <strong>{hero.orders}</strong>
+            <span>{hero.orders_label}</span>
           </div>
           <div>
-            <strong>4.9★</strong>
-            <span>Average rating</span>
+            <strong>{hero.rating}</strong>
+            <span>{hero.rating_label}</span>
           </div>
           <div>
-            <strong>48hr</strong>
-            <span>Stitch to doorstep</span>
+            <strong>{hero.delivery}</strong>
+            <span>{hero.delivery_label}</span>
           </div>
           <div>
-            <strong>24hr</strong>
-            <span>Alterations express</span>
+            <strong>{hero.express}</strong>
+            <span>{hero.express_label}</span>
           </div>
         </div>
         </Reveal>

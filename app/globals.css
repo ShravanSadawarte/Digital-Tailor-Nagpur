@@ -664,9 +664,13 @@ body {
   .page-hero { border-radius: 16px; }
 }
 
+/* Mini before/after photos in homepage preview cards */
+.tf-mini-photos { margin-bottom: 10px; }
+.tf-mini-photos .tf-img, .tf-mini-photos .tf-ph { height: 110px; }
+.tf-mini-photos .tf-ph { font-size: 30px; }
+
 /* Respect users who prefer no motion */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+@media (prefers-reduced-motion: reduce) {  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;

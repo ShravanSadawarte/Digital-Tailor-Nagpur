@@ -5,7 +5,7 @@ import Image from "next/image";
 import { inr, shortId } from "@/components/Receipt";
 
 const SIZES = ["S", "M", "L", "XL", "XXL"];
-const TABS = ["products", "examples", "materials", "offers", "orders", "settings"] as const;
+const TABS = ["products", "examples", "materials", "offers", "orders", "settings", "announcements", "content"] as const;
 const TAB_LABEL: Record<string, string> = {
   products: "🛍️ Products",
   examples: "✨ Raw → Best",
@@ -13,6 +13,8 @@ const TAB_LABEL: Record<string, string> = {
   offers: "🎁 Offers",
   orders: "📦 Orders",
   settings: "⚙️ Settings",
+  announcements: "📢 Top Bar",
+  content: "🎨 Content",
 };
 
 async function api(resource: string, method = "GET", body?: any) {
@@ -57,6 +59,11 @@ export default function AdminPage() {
   // Settings state
   const [settings, setSettings] = useState<any>({ upi_id: "", upi_qr_url: "", notice: "" });
   const [qrFile, setQrFile] = useState<File | null>(null);
+  // Announcements state
+  const [anncs, setAnncs] = useState<any[]>([]);
+  const [newAnn, setNewAnn] = useState("");
+  // Site content state (hero stats, services, section headers)
+  const [content, setContent] = useState<Record<string, any>>({});
 
   useEffect(() => {
     fetch("/api/admin/auth")
@@ -69,6 +76,8 @@ export default function AdminPage() {
     if (gate !== "ok") return;
     if (tab === "orders") loadOrders();
     else if (tab === "settings") loadSettings();
+    else if (tab === "announcements") loadAnncs();
+    else if (tab === "content") loadContent();
     else loadTab(tab);
     setEditing(null); setForm({}); setFiles([]); setMsg("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -94,6 +103,66 @@ export default function AdminPage() {
     const res = await fetch("/api/admin/settings");
     const j = await res.json();
     if (j.settings) setSettings(j.settings);
+  };
+
+  const loadAnncs = async () => {
+    const res = await fetch("/api/admin/announcements");
+    const j = await res.json();
+    if (j.rows) setAnncs(j.rows);
+    else setMsg(j.error || "Failed to load announcements");
+  };
+
+  const annAction = async (action: string, body: any = {}) => {    setBusy(true);
+    try {
+      const res = await fetch("/api/admin/announcements", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action, ...body }),
+      });
+      const j = await res.json();
+      if (j.error) setMsg(j.error);
+      else {
+        setNewAnn("");
+        await loadAnncs();
+        setMsg("Saved ✅");
+      }
+    } catch (e: any) { setMsg(e.message); }
+    finally { setBusy(false); }
+  };
+
+  const loadContent = async () => {
+    const res = await fetch("/api/admin/content");
+    const j = await res.json();
+    if (j.rows) {
+      const map: Record<string, any> = {};
+      j.rows.forEach((r: any) => { map[r.key] = r.value || {}; });
+      setContent(map);
+    } else setMsg(j.error || "Failed to load content");
+  };
+
+  const setC = (key: string, field: string, val: any) =>
+    setContent((c) => ({ ...c, [key]: { ...(c[key] || {}), [field]: val } }));
+
+  const setCItem = (key: string, idx: number, field: string, val: any) =>
+    setContent((c) => {
+      const items = [...((c[key]?.items || [{}, {}, {}]) as any[])];
+      while (items.length < 3) items.push({});
+      items[idx] = { ...(items[idx] || {}), [field]: val };
+      return { ...c, [key]: { ...(c[key] || {}), items } };
+    });
+
+  const saveContent = async (key: string) => {
+    setBusy(true);
+    try {
+      const res = await fetch("/api/admin/content", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, value: content[key] || {} }),
+      });
+      const j = await res.json();
+      setMsg(j.ok ? "Content saved ✅ — live on the site now." : j.error);
+    } catch (e: any) { setMsg(e.message); }
+    finally { setBusy(false); }
   };
 
   if (gate === "loading") return <main className="container page"><p className="muted">Checking access…</p></main>;
@@ -365,6 +434,103 @@ export default function AdminPage() {
           <label>Shop notice<textarea value={settings.notice || ""} onChange={(e) => setSettings({ ...settings, notice: e.target.value })} rows={2} /></label>
           <button className="btn btn-primary btn-block" disabled={busy} onClick={saveSettings}>{busy ? "Saving…" : "Save Settings"}</button>
         </div>
+      )}
+
+      {tab === "announcements" && (
+        <>
+          <div className="card form">
+            <h3>New announcement</h3>
+            <p className="muted small" style={{ marginBottom: 12 }}>
+              Shows in the top bar for all visitors. Keep it short — one line.
+              Until you add one, the demo message stays live.
+            </p>
+            <label>Text<textarea value={newAnn} onChange={(e) => setNewAnn(e.target.value)} rows={2} placeholder="e.g. Diwali offer — flat 20% off custom stitching till Sunday!" /></label>
+            <div className="builder-nav">
+              <span />
+              <button className="btn btn-primary" disabled={busy || !newAnn.trim()} onClick={() => annAction("create", { text: newAnn })}>
+                {busy ? "Saving…" : "Publish"}
+              </button>
+            </div>
+          </div>
+          <div className="adm-list">
+            {anncs.map((a) => (
+              <div key={a.id} className="card adm-row">
+                <div>
+                  <strong>{a.active ? "🟢 Live" : "⚪ Paused"}</strong>
+                  <div className="muted small">{a.text}</div>
+                </div>
+                <div className="adm-actions">
+                  <button
+                    className="btn btn-outline"
+                    disabled={busy}
+                    onClick={() => annAction("toggle", { id: a.id, active: !a.active })}
+                  >
+                    {a.active ? "Pause" : "Show"}
+                  </button>
+                  <button
+                    className="btn btn-outline"
+                    disabled={busy}
+                    onClick={() => { if (confirm("Delete this announcement?")) annAction("remove", { id: a.id }); }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+            {anncs.length === 0 && <p className="muted">No announcements yet — the demo message is showing.</p>}
+          </div>
+        </>
+      )}
+
+      {tab === "content" && (
+        <>
+          <p className="muted">Homepage text. Empty fields keep showing the demo content.</p>
+          <div className="card form" style={{ marginBottom: 14 }}>
+            <h3>Hero numbers &amp; reviews</h3>
+            <div className="meas-grid">
+              <label>Orders<input value={content.hero?.orders || ""} onChange={(e) => setC("hero", "orders", e.target.value)} placeholder="5000+" /></label>
+              <label>Orders label<input value={content.hero?.orders_label || ""} onChange={(e) => setC("hero", "orders_label", e.target.value)} placeholder="Orders delivered" /></label>
+              <label>Rating<input value={content.hero?.rating || ""} onChange={(e) => setC("hero", "rating", e.target.value)} placeholder="4.9★" /></label>
+              <label>Rating label<input value={content.hero?.rating_label || ""} onChange={(e) => setC("hero", "rating_label", e.target.value)} placeholder="Average rating" /></label>
+              <label>Delivery<input value={content.hero?.delivery || ""} onChange={(e) => setC("hero", "delivery", e.target.value)} placeholder="48hr" /></label>
+              <label>Delivery label<input value={content.hero?.delivery_label || ""} onChange={(e) => setC("hero", "delivery_label", e.target.value)} placeholder="Stitch to doorstep" /></label>
+              <label>Express<input value={content.hero?.express || ""} onChange={(e) => setC("hero", "express", e.target.value)} placeholder="24hr" /></label>
+              <label>Express label<input value={content.hero?.express_label || ""} onChange={(e) => setC("hero", "express_label", e.target.value)} placeholder="Alterations express" /></label>
+              <label>Score<input value={content.hero?.score || ""} onChange={(e) => setC("hero", "score", e.target.value)} placeholder="4.9" /></label>
+              <label>Reviews line<input value={content.hero?.reviews || ""} onChange={(e) => setC("hero", "reviews", e.target.value)} placeholder="2,300+ happy reviews" /></label>
+              <label>Customers line<input value={content.hero?.customers || ""} onChange={(e) => setC("hero", "customers", e.target.value)} placeholder="Loved by 5,000+ customers in Nagpur" /></label>
+            </div>
+            <button className="btn btn-primary btn-block" disabled={busy} onClick={() => saveContent("hero")}>{busy ? "Saving…" : "Save hero"}</button>
+          </div>
+
+          <div className="card form" style={{ marginBottom: 14 }}>
+            <h3>Services</h3>
+            <label>Eyebrow<input value={content.services?.eyebrow || ""} onChange={(e) => setC("services", "eyebrow", e.target.value)} placeholder="What we do" /></label>
+            <label>Title<input value={content.services?.title || ""} onChange={(e) => setC("services", "title", e.target.value)} placeholder="Our Services" /></label>
+            <label>Subtitle<textarea value={content.services?.sub || ""} onChange={(e) => setC("services", "sub", e.target.value)} rows={2} /></label>
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="review-box">
+                <strong>Service {i + 1}</strong>
+                <label>Icon (emoji)<input value={content.services?.items?.[i]?.icon || ""} onChange={(e) => setCItem("services", i, "icon", e.target.value)} placeholder="👔" /></label>
+                <label>Title<input value={content.services?.items?.[i]?.title || ""} onChange={(e) => setCItem("services", i, "title", e.target.value)} /></label>
+                <label>Text<textarea value={content.services?.items?.[i]?.text || ""} onChange={(e) => setCItem("services", i, "text", e.target.value)} rows={2} /></label>
+              </div>
+            ))}
+            <button className="btn btn-primary btn-block" disabled={busy} onClick={() => saveContent("services")}>{busy ? "Saving…" : "Save services"}</button>
+          </div>
+
+          <div className="card form">
+            <h3>Section headers</h3>
+            <label>Shop eyebrow<input value={content.sections?.shop_eyebrow || ""} onChange={(e) => setC("sections", "shop_eyebrow", e.target.value)} /></label>
+            <label>Shop title<input value={content.sections?.shop_title || ""} onChange={(e) => setC("sections", "shop_title", e.target.value)} /></label>
+            <label>Shop subtitle<textarea value={content.sections?.shop_sub || ""} onChange={(e) => setC("sections", "shop_sub", e.target.value)} rows={2} /></label>
+            <label>Upcycle eyebrow<input value={content.sections?.tf_eyebrow || ""} onChange={(e) => setC("sections", "tf_eyebrow", e.target.value)} /></label>
+            <label>Upcycle title<input value={content.sections?.tf_title || ""} onChange={(e) => setC("sections", "tf_title", e.target.value)} /></label>
+            <label>Upcycle subtitle<textarea value={content.sections?.tf_sub || ""} onChange={(e) => setC("sections", "tf_sub", e.target.value)} rows={2} /></label>
+            <p className="muted small">Transformation photos are uploaded per item in the Raw → Best tab (before / after photos).</p>
+            <button className="btn btn-primary btn-block" disabled={busy} onClick={() => saveContent("sections")}>{busy ? "Saving…" : "Save headers"}</button>
+          </div>
+        </>
       )}
     </main>
   );
