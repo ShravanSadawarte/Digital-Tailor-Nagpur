@@ -147,6 +147,9 @@ footer { background: var(--deep-purple); color: #E9CFAF; padding: 18px 0; font-s
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .hero-sub { font-size: 17.5px; color: var(--on-dark-muted); max-width: 480px; }
+.hero-only {
+  color: var(--fawn); font-weight: 800; white-space: nowrap;
+}
 .hero-ctas { display: flex; gap: 12px; margin: 26px 0 10px; flex-wrap: wrap; }
 .hero-ctas .btn-outline { background: transparent; color: var(--on-dark); border-color: rgba(227,168,138,.55); }
 .hero-ctas .btn-outline:hover { border-color: var(--fawn); color: var(--fawn); }

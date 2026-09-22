@@ -59,9 +59,8 @@ export default function Hero({ onSignup }: Props) {
           </h1>
 
           <p className="hero-sub">
-            Digital Tailor brings the masterji to your doorstep — custom
-            stitching and 24-hour alterations across Nagpur, starting at
-            just ₹199.
+            Stitch what you want, wear what you want.{" "}
+            <span className="hero-only">Only in Nagpur.</span>
           </p>
 
           <div className="hero-ctas">
