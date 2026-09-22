@@ -101,33 +101,26 @@ export function TransformationsPreview() {
           {rows.map((r, i) => (
             <Reveal key={r.id} delay={Math.min(i, 2) * 90}>
             <Link href="/transformations" className="feature tf-mini">
-              {r.before_image || r.after_image ? (
-                <div className="tf-imgs tf-mini-photos">
-                  <div className="tf-side">
-                    {r.before_image ? (
-                      <Image src={r.before_image} alt="Before" width={200} height={140} className="tf-img" />
-                    ) : (
-                      <div className="tf-ph"><MonoMark size={54} label="Raw" /></div>
-                    )}
-                    <span className="tf-tag">Before</span>
-                  </div>
-                  <span className="tf-arrow">→</span>
-                  <div className="tf-side">
-                    {r.after_image ? (
-                      <Image src={r.after_image} alt="After" width={200} height={140} className="tf-img" />
-                    ) : (
-                      <div className="tf-ph"><MonoMark size={54} label="Stitched" /></div>
-                    )}
-                    <span className="tf-tag tag-after">After</span>
-                  </div>
+              <div className="tf-imgs tf-mini-photos">
+                <div className="tf-side">
+                  {r.before_image ? (
+                    <Image src={r.before_image} alt="Before" width={200} height={140} className="tf-img" />
+                  ) : (
+                    <div className="tf-ph"><MonoMark size={52} label="Raw" /></div>
+                  )}
+                  <span className="tf-tag">Before</span>
                 </div>
-              ) : (
-                <div className="tf-mini-imgs tf-mini-words">
-                  <span>Before</span>
-                  <span className="tf-arrow">→</span>
-                  <span>After</span>
+                <span className="tf-arrow" aria-hidden="true">→</span>
+                <div className="tf-side">
+                  {r.after_image ? (
+                    <Image src={r.after_image} alt="After" width={200} height={140} className="tf-img" />
+                  ) : (
+                    <div className="tf-ph"><MonoMark size={52} label="Stitched" /></div>
+                  )}
+                  <span className="tf-tag tag-after">After</span>
                 </div>
-              )}
+              </div>
+              <div className="tf-type">{r.dress_type}</div>
               <h3>{r.title}</h3>
               <p>{r.description}</p>
             </Link>

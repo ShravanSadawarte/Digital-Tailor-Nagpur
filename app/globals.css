@@ -665,9 +665,12 @@ body {
 }
 
 /* Mini before/after photos in homepage preview cards */
-.tf-mini-photos { margin-bottom: 10px; }
+.tf-mini-photos { margin-bottom: 12px; }
 .tf-mini-photos .tf-img, .tf-mini-photos .tf-ph { height: 110px; }
 .tf-mini-photos .tf-ph { font-size: 30px; }
+.tf-mini .tf-type { margin-bottom: 4px; }
+.tf-mini h3 { margin: 2px 0 6px; font-size: 19px; line-height: 1.3; }
+.tf-mini p { font-size: 14px; color: var(--muted); margin: 0; }
 
 /* ================= Classic iconography, motion & effects ================= */
 .icon { display: inline-block; vertical-align: -3px; flex: none; }
