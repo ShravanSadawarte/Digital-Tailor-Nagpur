@@ -488,6 +488,7 @@ export default function AdminPage() {
           <p className="muted">Homepage text. Empty fields keep showing the demo content.</p>
           <div className="card form" style={{ marginBottom: 14 }}>
             <h3>Hero numbers &amp; reviews</h3>
+            <label>Latest fashion photo (white circle on homepage){content.hero?.image_url && <Img src={content.hero.image_url} alt="Hero" />}<input type="file" accept="image/*" onChange={async (e) => { const f = e.target.files?.[0]; if (f) { setBusy(true); try { setC("hero", "image_url", await uploadFile("design-images", f)); } catch (err: any) { setMsg(err.message); } finally { setBusy(false); } } }} /></label>
             <div className="meas-grid">
               <label>Orders<input value={content.hero?.orders || ""} onChange={(e) => setC("hero", "orders", e.target.value)} placeholder="5000+" /></label>
               <label>Orders label<input value={content.hero?.orders_label || ""} onChange={(e) => setC("hero", "orders_label", e.target.value)} placeholder="Orders delivered" /></label>

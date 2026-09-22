@@ -3,13 +3,11 @@
 import { useEffect, useState } from "react";
 import Reveal from "@/components/Reveal";
 import { useSiteContent } from "@/lib/content";
-import { Icon } from "@/components/icons";
+import { Icon, MonoMark } from "@/components/icons";
 
 type Props = {
   onSignup: () => void;
 };
-
-const SERVICES = ["Shirts", "Blouses", "Kurtis", "Suits", "Alteration"];
 
 const AVATARS = [
   { initial: "R", bg: "#711E7B", color: "#fff" },
@@ -122,46 +120,18 @@ export default function Hero({ onSignup }: Props) {
 
         <Reveal delay={140} className="hero-visual">
           <div className="hero-blob" aria-hidden />
-          <div className="card pickup-card">
-            <div className="pickup-head">
-              <h3>Book your pickup</h3>
-              <span className="pickup-tag">Free doorstep service</span>
-            </div>
-            <div className="chips">
-              {SERVICES.map((s) => (
-                <span key={s} className="chip">
-                  {s}
-                </span>
-              ))}
-            </div>
-            <div className="price-row">
-              <span>Stitching from</span>
-              <strong>₹199</strong>
-            </div>
-            <button
-              className="btn btn-primary btn-block"
-              onClick={scrollToBooking}
-            >
-              Schedule pickup
-            </button>
-            <small>No advance payment • Pay on delivery</small>
-          </div>
-
-          <div className="float-card float-reviews">
-            <div className="stars">★★★★★</div>
-            <strong>{hero.score} / 5</strong>
-            <span>{hero.reviews}</span>
-          </div>
-
-          <div className="float-card float-order">
-            <div className="order-top">
-              <span className="order-dot" />
-              <strong>Order #DT-4821</strong>
-            </div>
-            <span>Out for delivery</span>
-            <div className="progress">
-              <div className="progress-bar" />
-            </div>
+          <div className="hero-fashion">
+            {hero.image_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={hero.image_url} alt="Latest fashion at Digital Tailor" />
+            ) : (
+              <div className="hero-fashion-empty">
+                <MonoMark size={88} />
+                <small>Latest fashion photo</small>
+                <span>Add it in Admin → Content</span>
+              </div>
+            )}
+            <span className="hero-fashion-tag">New arrival</span>
           </div>
         </Reveal>
       </div>
