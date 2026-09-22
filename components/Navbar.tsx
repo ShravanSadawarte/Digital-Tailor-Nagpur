@@ -70,18 +70,10 @@ export default function Navbar() {
     }
   };
 
-  const logout = async () => {
-    await getSupabase()?.auth.signOut();
-    await fetch("/api/admin/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "logout" }),
-    });
-    setEmail(null);
-    setIsAdmin(false);
-    setNeedPass(false);
+  // Close the mobile menu whenever the route changes.
+  useEffect(() => {
     setOpen(false);
-  };
+  }, [path]);
 
   const isActive = (href: string) =>
     href === "/" ? path === "/" : path.startsWith(href);
@@ -144,15 +136,12 @@ export default function Navbar() {
             </Link>
           ))}
           <Link href="/cart" onClick={() => setOpen(false)}>Bag ({count})</Link>
-          <Link href="/profile" onClick={() => setOpen(false)}>My Profile</Link>          {isAdmin && (
+          <Link href="/profile" onClick={() => setOpen(false)}>My Profile</Link>
+          {isAdmin && (
             <Link href="/admin" onClick={() => setOpen(false)}>Admin</Link>
           )}
           <div className="mobile-actions">
-            {email ? (
-              <button className="btn btn-outline" onClick={logout}>
-                Logout
-              </button>
-            ) : (
+            {!email && (
               <>
                 <button className="btn btn-outline" onClick={() => { setOpen(false); setAuthMode("login"); }}>
                   Login

@@ -80,6 +80,17 @@ export default function ProfilePage() {
     setMeas(meas.filter((m) => m.id !== id));
   };
 
+  const logout = async () => {
+    await getSupabase()?.auth.signOut();
+    await fetch("/api/admin/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "logout" }),
+    }).catch(() => null);
+    setUserId(null);
+    setEmail("");
+  };
+
   const shopLines = (o: any): ReceiptLine[] =>
     (o.items || []).map((i: any) => ({ label: `${i.qty} × ${i.name} (Size ${i.size})`, amount: i.qty * i.price }));
 
@@ -103,8 +114,13 @@ export default function ProfilePage() {
 
   return (
     <main className="container page">
-      <h1 className="page-title">My Profile</h1>
-      <p className="muted">Signed in as <strong>{email}</strong></p>
+      <div className="profile-head">
+        <div>
+          <h1 className="page-title">My Profile</h1>
+          <p className="muted" style={{ margin: 0 }}>Signed in as <strong>{email}</strong></p>
+        </div>
+        <button className="btn btn-outline" onClick={logout}>Logout</button>
+      </div>
 
       <div className="tabs">
         {(["info", "meas", "orders"] as const).map((t) => (

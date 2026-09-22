@@ -13,6 +13,8 @@ type Props = {
 export default function AuthModal({ mode, onClose }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -52,8 +54,21 @@ export default function AuthModal({ mode, onClose }: Props) {
         if (error) throw error;
         if (data.session) {
           // Email confirmation is OFF — user is logged in immediately.
+          // Save the profile details they just gave us (best effort —
+          // the profile page lets them edit it later anyway).
+          try {
+            await supabase.from("profiles").upsert({
+              id: data.session.user.id,
+              full_name: fullName.trim() || null,
+              phone: phone.trim() || null,
+            });
+          } catch {
+            /* ignore — account is already created */
+          }
           setEmail("");
           setPassword("");
+          setFullName("");
+          setPhone("");
           onClose();
         } else {
           // Email confirmation is ON — user must confirm first.
@@ -94,6 +109,32 @@ export default function AuthModal({ mode, onClose }: Props) {
           </p>
         )}
         <form onSubmit={handleSubmit}>
+          {isSignup && (
+            <>
+              <label>
+                Full name
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                  autoComplete="name"
+                />
+              </label>
+              <label>
+                Phone
+                <input
+                  type="tel"
+                  placeholder="98765 43210"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  autoComplete="tel"
+                />
+              </label>
+            </>
+          )}
           <label>
             Email
             <input
