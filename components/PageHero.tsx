@@ -11,7 +11,7 @@ export default function PageHero({ eyebrow, title, sub }: Props) {
   return (
     <Reveal>
       <div className="page-hero">
-        <span className="eyebrow on-dark">{eyebrow}</span>
+        <span className="eyebrow">{eyebrow}</span>
         <h1 className="display">{title}</h1>
         <p>{sub}</p>
       </div>

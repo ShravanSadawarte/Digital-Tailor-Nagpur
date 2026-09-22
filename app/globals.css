@@ -402,19 +402,19 @@ footer { background: var(--deep-purple); color: #E9CFAF; padding: 18px 0; font-s
 .offer-grid > * { flex: 1 1 300px; max-width: 430px; }
 .offer-card { overflow: hidden; }
 .offer-img { width: calc(100% + 56px); height: 180px; object-fit: cover; margin: -28px -28px 12px; }
-.offer-ph { font-size: 56px; text-align: center; background: linear-gradient(135deg, var(--eminence), var(--sunset)); border-radius: 10px; padding: 26px; margin-bottom: 12px; }
+.offer-ph { font-size: 56px; text-align: center; background: linear-gradient(135deg, var(--plum-mist), var(--fawn-soft)); border-radius: 10px; padding: 26px; margin-bottom: 12px; }
 .offer-cond { display: block; color: var(--muted); margin-top: 8px; }
 .offer-valid { margin-top: 8px; display: inline-block; font-size: 12px; font-weight: 800; background: var(--fawn-soft); color: var(--eminence); padding: 4px 12px; border-radius: 14px; }
 
-/* Builder CTA + craftsman */
+/* Builder CTA — light band, deep button pops */
 .builder-cta {
   display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
-  background: linear-gradient(120deg, var(--deep-purple), var(--purple-iris) 60%, var(--eminence));
-  color: var(--on-dark); border-radius: 20px; padding: 36px;
-  box-shadow: 0 20px 50px rgba(51,12,75,.35);
+  background: linear-gradient(120deg, #FDF8F3, var(--plum-mist) 65%, var(--fawn-soft));
+  color: var(--ink); border: 1px solid var(--fawn-line); border-radius: 20px; padding: 36px;
+  box-shadow: var(--shadow-md);
 }
-.builder-cta h2 { color: #fff; margin: 10px 0 6px; }
-.builder-cta p { color: var(--on-dark-muted); max-width: 520px; }
+.builder-cta h2 { color: var(--ink); margin: 10px 0 6px; }
+.builder-cta p { color: var(--muted); max-width: 520px; }
 .craftsman-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 36px; align-items: center; }
 .craftsman-photo { position: relative; }
 .craftsman-photo img {
@@ -424,8 +424,8 @@ footer { background: var(--deep-purple); color: #E9CFAF; padding: 18px 0; font-s
 .craftsman-ph {
   aspect-ratio: 4/5; border-radius: 20px; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 8px; font-size: 72px;
-  background: linear-gradient(135deg, var(--purple-iris), var(--eminence));
-  color: #fff; border: 3px solid var(--fawn-line);
+  background: linear-gradient(135deg, var(--plum-mist), var(--fawn-soft));
+  color: var(--eminence); border: 3px solid var(--fawn-line);
 }
 .craftsman-ph small { font-size: 13px; }
 .craftsman-badge {
@@ -591,21 +591,22 @@ body {
 @keyframes fade-in { from { opacity: 0; } }
 @keyframes pop-in { from { opacity: 0; transform: translateY(16px) scale(.96); } }
 
-/* Page hero band for inner pages */
+/* Page hero band for inner pages — light tint, deep text */
 .page-hero {
   position: relative; overflow: hidden;
   background:
-    radial-gradient(480px 240px at 12% 0%, rgba(185, 55, 157, .4), transparent 60%),
-    radial-gradient(420px 220px at 90% 100%, rgba(227, 168, 138, .28), transparent 60%),
-    linear-gradient(135deg, var(--deep-purple), var(--purple-iris) 60%, var(--eminence));
-  color: var(--on-dark);
+    radial-gradient(480px 240px at 12% 0%, rgba(185, 55, 157, .14), transparent 60%),
+    radial-gradient(420px 220px at 90% 100%, rgba(227, 168, 138, .25), transparent 60%),
+    linear-gradient(135deg, #FDF8F3, var(--plum-mist));
+  color: var(--ink);
+  border: 1px solid var(--fawn-line);
   border-radius: 22px;
   padding: clamp(28px, 5vw, 44px);
   margin-bottom: 26px;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
 }
-.page-hero h1 { font-size: clamp(30px, 4.4vw, 44px); letter-spacing: -.5px; line-height: 1.08; margin: 10px 0 8px; }
-.page-hero p { color: var(--on-dark-muted); max-width: 560px; margin: 0; font-size: 16px; }
+.page-hero h1 { font-size: clamp(30px, 4.4vw, 44px); letter-spacing: -.5px; line-height: 1.08; margin: 10px 0 8px; color: var(--ink); }
+.page-hero p { color: var(--muted); max-width: 560px; margin: 0; font-size: 16px; }
 
 /* Rich footer */
 .footer-rich {
@@ -751,12 +752,12 @@ body {
 .ornament span { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--fawn-line)); }
 .ornament span:last-child { background: linear-gradient(90deg, var(--fawn-line), transparent); }
 
-/* Classic ticker ribbon */
+/* Classic ticker ribbon — light band, deep text */
 .marquee {
-  background: linear-gradient(90deg, var(--deep-purple), var(--eminence), var(--deep-purple));
-  color: var(--fawn); overflow: hidden; white-space: nowrap;
-  border-top: 1px solid rgba(227, 168, 138, .4);
-  border-bottom: 1px solid rgba(227, 168, 138, .4);
+  background: #FDF8F3;
+  color: var(--eminence); overflow: hidden; white-space: nowrap;
+  border-top: 1px solid var(--fawn-line);
+  border-bottom: 1px solid var(--fawn-line);
   padding: 11px 0;
 }
 .marquee-track { display: inline-flex; gap: 0; animation: marquee 30s linear infinite; will-change: transform; }
@@ -765,7 +766,7 @@ body {
   font-family: var(--font-display), Georgia, serif; font-style: italic;
   font-size: 15px; letter-spacing: 1.5px; padding: 0 26px;
 }
-.marquee-item i { font-style: normal; font-size: 10px; margin-left: 26px; opacity: .7; }
+.marquee-item i { font-style: normal; font-size: 10px; margin-left: 26px; color: var(--sunset); opacity: .85; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* Button sheen sweep */

@@ -9,13 +9,6 @@ type Props = {
   onSignup: () => void;
 };
 
-const AVATARS = [
-  { initial: "R", bg: "#711E7B", color: "#fff" },
-  { initial: "S", bg: "#B9379D", color: "#fff" },
-  { initial: "P", bg: "#E3A88A", color: "#330C4B" },
-  { initial: "A", bg: "#51017C", color: "#fff" },
-];
-
 /** Animated number: counts 0 → target once mounted (e.g. "5000+", "4.9★", "48hr"). */
 function Count({ text }: { text: string }) {
   const [out, setOut] = useState(text);
@@ -95,27 +88,6 @@ export default function Hero({ onSignup }: Props) {
           >
             <Icon name="pin" size={15} /> 26B, Hanuman Society, Vaishali Nagar, Nagpur 440017
           </a>
-
-          <div className="hero-trust">
-            <div className="avatars">
-              {AVATARS.map((a) => (
-                <span
-                  key={a.initial}
-                  className="avatar"
-                  style={{ background: a.bg, color: a.color }}
-                >
-                  {a.initial}
-                </span>
-              ))}
-              <span className="avatar avatar-more">5k+</span>
-            </div>
-            <div className="trust-text">
-              <div className="stars">
-                ★★★★★ <strong>{hero.score}</strong>
-              </div>
-              <span>{hero.customers}</span>
-            </div>
-          </div>
         </Reveal>
 
         <Reveal delay={140} className="hero-visual">
