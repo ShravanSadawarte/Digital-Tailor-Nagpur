@@ -66,10 +66,10 @@ export default function Hero({ onSignup }: Props) {
 
           <div className="hero-ctas">
             <button
-              className="btn btn-primary btn-block"
+              className="btn btn-primary btn-lg hero-cta"
               onClick={scrollToContact}
             >
-              Schedule pickup
+              Book free pickup <span aria-hidden>→</span>
             </button>
             <a href="#services" className="btn btn-outline btn-lg">
               Explore services
