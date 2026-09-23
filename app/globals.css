@@ -1357,6 +1357,9 @@ img { max-width: 100%; }
   #booking .contact-list li, #craftsman .contact-list li { gap: 8px; }
   .contact-list li strong { flex: none; }
 
+  /* Shop preview: 50% less space above, 30% less below (phone) */
+  .shop-preview { padding-top: 18px; padding-bottom: 25px; }
+  .shop-preview .sec-head { margin-bottom: 11px; }
   /* Shop preview: 25% smaller cards in invisible horizontal scroll */
   .shop-preview .sec-head .btn { display: none; }
   .product-grid.mini {
