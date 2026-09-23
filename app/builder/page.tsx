@@ -304,7 +304,7 @@ export default function BuilderPage() {
                 <p className="muted">Or enter fresh measurements:</p>
                 <div className="meas-grid">
                   {MEAS_FIELDS.map((f) => (
-                    <label key={f}>{f}<input value={newMeas[f] || ""} onChange={(e) => setNewMeas({ ...newMeas, [f]: e.target.value })} placeholder="inches" /></label>
+                    <label key={f}>{f}<input value={newMeas[f] || ""} onChange={(e) => setNewMeas({ ...newMeas, [f]: e.target.value })} placeholder="inches" inputMode="decimal" /></label>
                   ))}
                 </div>
               </>
@@ -313,11 +313,11 @@ export default function BuilderPage() {
             )}
 
             <h3>Your details &amp; payment</h3>
-            <label>Name<input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" /></label>
-            <label>Phone<input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="98765 43210" /></label>
+            <label>Name<input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" /></label>
+            <label>Phone<input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="98765 43210" type="tel" inputMode="tel" autoComplete="tel" /></label>
             <div className="pay-opts">
-              <label className="pay-opt"><input type="radio" checked={pay === "cod"} onChange={() => setPay("cod")} />💵 Pay on pickup</label>
-              <label className="pay-opt"><input type="radio" checked={pay === "online"} onChange={() => setPay("online")} />📱 UPI QR online</label>
+              <label className="pay-opt"><input type="radio" checked={pay === "cod"} onChange={() => setPay("cod")} />Pay on pickup</label>
+              <label className="pay-opt"><input type="radio" checked={pay === "online"} onChange={() => setPay("online")} />UPI QR online</label>
             </div>
             {pay === "online" && (
               <div className="qr-box">

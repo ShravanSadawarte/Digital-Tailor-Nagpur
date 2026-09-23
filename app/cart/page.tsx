@@ -144,19 +144,19 @@ export default function CartPage() {
 
           <div className="card form checkout">
             <h3>Delivery details</h3>
-            <label>Name<input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" /></label>
-            <label>Phone<input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="98765 43210" /></label>
-            <label>Address<textarea value={address} onChange={(e) => setAddress(e.target.value)} rows={2} placeholder="House no, street, area, Nagpur" /></label>
+            <label>Name<input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" /></label>
+            <label>Phone<input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="98765 43210" type="tel" inputMode="tel" autoComplete="tel" /></label>
+            <label>Address<textarea value={address} onChange={(e) => setAddress(e.target.value)} rows={2} placeholder="House no, street, area, Nagpur" autoComplete="street-address" /></label>
 
             <h3>Payment</h3>
             <div className="pay-opts">
               <label className="pay-opt">
                 <input type="radio" checked={pay === "cod"} onChange={() => setPay("cod")} />
-                💵 Pay on pickup / delivery
+                Pay on pickup / delivery
               </label>
               <label className="pay-opt">
                 <input type="radio" checked={pay === "online"} onChange={() => setPay("online")} />
-                📱 Pay online via UPI QR
+                Pay online via UPI QR
               </label>
             </div>
 
@@ -188,6 +188,17 @@ export default function CartPage() {
       )}
 
       <AuthModal mode={authMode} onClose={() => setAuthMode(null)} />
+      {items.length > 0 && !receipt && (
+        <div className="cart-sticky" role="region" aria-label="Order summary">
+          <div>
+            <strong>{inr(total)}</strong>
+            <span>{items.reduce((n, i) => n + i.qty, 0)} item(s) • {pay === "cod" ? "Pay on pickup" : "UPI"}</span>
+          </div>
+          <button className="btn btn-primary" disabled={loading} onClick={placeOrder}>
+            {loading ? "Placing…" : "Place Order →"}
+          </button>
+        </div>
+      )}
       {receipt && (
         <Receipt
           open

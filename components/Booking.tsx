@@ -89,11 +89,11 @@ export default function Booking({ userId }: Props) {
         <form className="card form" onSubmit={handleSubmit}>
           <label>
             Name
-            <input name="name" type="text" placeholder="Your name" required />
+            <input name="name" type="text" placeholder="Your name" required autoComplete="name" />
           </label>
           <label>
             Phone
-            <input name="phone" type="tel" placeholder="98765 43210" required />
+            <input name="phone" type="tel" inputMode="tel" placeholder="98765 43210" required autoComplete="tel" />
           </label>
           <label>
             Service

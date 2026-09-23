@@ -3,6 +3,7 @@ import { Fraunces } from "next/font/google";
 import { CartProvider } from "@/lib/cart";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BottomNav from "@/components/BottomNav";
 import Announcement from "@/components/Announcement";
 import BackToTop from "@/components/BackToTop";
 import "./globals.css";
@@ -41,6 +42,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <BottomNav />
           <BackToTop />
         </CartProvider>
       </body>

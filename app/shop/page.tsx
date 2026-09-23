@@ -8,7 +8,7 @@ import { useCart } from "@/lib/cart";
 import { inr } from "@/components/Receipt";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
-import { MonoMark } from "@/components/icons";
+import { MonoMark, Icon } from "@/components/icons";
 import { cached, TTL } from "@/lib/data-cache";
 
 type Product = {
@@ -33,7 +33,18 @@ export default function ShopPage() {
   const [picked, setPicked] = useState<Record<string, string>>({});
   const [added, setAdded] = useState("");
   const [loading, setLoading] = useState(true);
+  const [q, setQ] = useState("");
+  const [sheet, setSheet] = useState(false);
   const { add } = useCart();
+
+  useEffect(() => {
+    if (!sheet) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSheet(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [sheet]);
 
   useEffect(() => {
     const sb = getSupabase();
@@ -65,11 +76,24 @@ export default function ShopPage() {
     });
   }, []);
 
-  const list = products.filter(
-    (p) =>
-      (cat === "all" || (p as any).category_id === cat || p.categories?.name === cat) &&
-      (size === "all" || p.sizes.includes(size))
-  );
+  const list = products.filter((p) => {
+    const okCat =
+      cat === "all" || (p as any).category_id === cat || p.categories?.name === cat;
+    const okSize = size === "all" || p.sizes.includes(size);
+    const needle = q.trim().toLowerCase();
+    const okQ =
+      !needle ||
+      `${p.name} ${p.description || ""} ${p.categories?.name || ""}`
+        .toLowerCase()
+        .includes(needle);
+    return okCat && okSize && okQ;
+  });
+  const activeFilters = (cat !== "all" ? 1 : 0) + (size !== "all" ? 1 : 0);
+  const clearAll = () => {
+    setCat("all");
+    setSize("all");
+    setQ("");
+  };
 
   const addToCart = (p: Product) => {
     const s = picked[p.id] || p.sizes[0];
@@ -90,8 +114,27 @@ export default function ShopPage() {
         sub="Ready-made kurtis, suits, gowns & more — standard sizes S to XXL."
       />
 
+      <div className="searchbar">
+        <Icon name="search" size={20} />
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search kurtis, gowns, suits…"
+          type="search"
+          inputMode="search"
+          enterKeyHint="search"
+          aria-label="Search products"
+          autoComplete="off"
+        />
+        {q && (
+          <button className="search-x" onClick={() => setQ("")} aria-label="Clear search">
+            ✕
+          </button>
+        )}
+      </div>
+
       <div className="filters">
-        <select value={cat} onChange={(e) => setCat(e.target.value)}>
+        <select value={cat} onChange={(e) => setCat(e.target.value)} aria-label="Filter by category">
           <option value="all">All categories</option>
           {cats.map((c) => (
             <option key={c.id} value={c.id}>
@@ -99,7 +142,7 @@ export default function ShopPage() {
             </option>
           ))}
         </select>
-        <select value={size} onChange={(e) => setSize(e.target.value)}>
+        <select value={size} onChange={(e) => setSize(e.target.value)} aria-label="Filter by size">
           <option value="all">All sizes</option>
           {["S", "M", "L", "XL", "XXL"].map((s) => (
             <option key={s} value={s}>
@@ -108,6 +151,60 @@ export default function ShopPage() {
           ))}
         </select>
       </div>
+
+      <div className="shop-tools">
+        <button className="btn btn-outline filters-toggle" onClick={() => setSheet(true)}>
+          Filters{activeFilters > 0 ? ` (${activeFilters})` : ""}
+        </button>
+        <p className="result-count" role="status">
+          {loading ? "Loading…" : `${list.length} item${list.length === 1 ? "" : "s"}`}
+        </p>
+      </div>
+
+      {sheet && (
+        <div
+          className="sheet-scrim"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSheet(false);
+          }}
+        >
+          <div className="sheet" role="dialog" aria-modal="true" aria-label="Filters">
+            <div className="sheet-grip" aria-hidden="true" />
+            <div className="sheet-head">
+              <h3>Filters{activeFilters > 0 ? ` (${activeFilters})` : ""}</h3>
+              <button className="sheet-x" onClick={() => setSheet(false)} aria-label="Close filters">
+                ✕
+              </button>
+            </div>
+            <div className="sheet-filters">
+              <select value={cat} onChange={(e) => setCat(e.target.value)} aria-label="Filter by category">
+                <option value="all">All categories</option>
+                {cats.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+              <select value={size} onChange={(e) => setSize(e.target.value)} aria-label="Filter by size">
+                <option value="all">All sizes</option>
+                {["S", "M", "L", "XL", "XXL"].map((s) => (
+                  <option key={s} value={s}>
+                    Size {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="sheet-actions">
+              <button className="btn btn-outline" onClick={clearAll}>
+                Clear
+              </button>
+              <button className="btn btn-primary" onClick={() => setSheet(false)}>
+                Show {list.length} item{list.length === 1 ? "" : "s"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {loading && (
         <div className="product-grid" aria-hidden>
@@ -118,7 +215,13 @@ export default function ShopPage() {
       )}
 
       {!loading && list.length === 0 && (
-        <p className="muted">No products yet — check back soon!</p>
+        <div className="empty-state">
+          <p className="empty-title">No matches found</p>
+          <p className="muted">Try a different search or clear your filters.</p>
+          <button className="btn btn-outline" onClick={clearAll}>
+            Clear search &amp; filters
+          </button>
+        </div>
       )}
 
       <div className="product-grid">

@@ -132,9 +132,9 @@ export default function ProfilePage() {
 
       {tab === "info" && (
         <div className="card form narrow">
-          <label>Full name<input value={profile.full_name} onChange={(e) => setProfile({ ...profile, full_name: e.target.value })} placeholder="Your name" /></label>
-          <label>Phone<input value={profile.phone} onChange={(e) => setProfile({ ...profile, phone: e.target.value })} placeholder="98765 43210" /></label>
-          <label>Address<textarea value={profile.address} onChange={(e) => setProfile({ ...profile, address: e.target.value })} rows={3} placeholder="Delivery address" /></label>
+          <label>Full name<input value={profile.full_name} onChange={(e) => setProfile({ ...profile, full_name: e.target.value })} placeholder="Your name" autoComplete="name" /></label>
+          <label>Phone<input value={profile.phone} onChange={(e) => setProfile({ ...profile, phone: e.target.value })} placeholder="98765 43210" type="tel" inputMode="tel" autoComplete="tel" /></label>
+          <label>Address<textarea value={profile.address} onChange={(e) => setProfile({ ...profile, address: e.target.value })} rows={3} placeholder="Delivery address" autoComplete="street-address" /></label>
           <button className="btn btn-primary btn-block" onClick={saveProfile}>Save Profile</button>
           {saved && <p className="form-msg">{saved}</p>}
         </div>

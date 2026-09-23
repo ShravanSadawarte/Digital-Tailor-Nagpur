@@ -17,7 +17,9 @@ export type IconName =
   | "mail"
   | "clock"
   | "check"
-  | "user";
+  | "user"
+  | "home"
+  | "search";
 
 const PATHS: Record<IconName, React.ReactNode> = {
   scissors: (
@@ -113,6 +115,19 @@ const PATHS: Record<IconName, React.ReactNode> = {
     <>
       <circle cx="12" cy="8" r="3.6" />
       <path d="M4.8 20c1.4-3.4 4.2-5 7.2-5s5.8 1.6 7.2 5" />
+    </>
+  ),
+  home: (
+    <>
+      <path d="m4 11 8-7 8 7" />
+      <path d="M6 9.5V20h12V9.5" />
+      <path d="M10 20v-5h4v5" />
+    </>
+  ),
+  search: (
+    <>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m16 16 4.5 4.5" />
     </>
   ),
 };

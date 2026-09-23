@@ -127,6 +127,7 @@ export default function AuthModal({ mode, onClose }: Props) {
                 Phone
                 <input
                   type="tel"
+                  inputMode="tel"
                   placeholder="98765 43210"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -140,10 +141,12 @@ export default function AuthModal({ mode, onClose }: Props) {
             Email
             <input
               type="email"
+              inputMode="email"
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete="email"
             />
           </label>
           <label>
@@ -155,6 +158,7 @@ export default function AuthModal({ mode, onClose }: Props) {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
+              autoComplete={isSignup ? "new-password" : "current-password"}
             />
           </label>
           {error && <p className="form-err">{error}</p>}
