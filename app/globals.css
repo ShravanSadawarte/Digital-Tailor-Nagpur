@@ -1078,7 +1078,42 @@ img { max-width: 100%; }
   .sec-head .btn { min-height: 46px; }
 }
 
-/* Touch devices: roomy targets, no sticky hovers, no iOS input zoom */@media (hover: none), (pointer: coarse) {
+/* ============ Stage-3 mobile densify (≤860px): smaller, same hierarchy ============ */
+@media (max-width: 860px) {
+  .section { padding: 36px 0; }
+  .card { padding: 20px; }
+  .sec-head { margin-bottom: 16px; }
+  .muted { margin-bottom: 16px; }
+  .grid3, .offer-grid, .tf-grid, .foot-grid { gap: 12px; }
+  .cart-list, .meas-list, .orders-list, .adm-list { gap: 10px; }
+  .cart-row, .adm-row { padding: 12px 14px; }
+  .tabs { margin: 14px 0; }
+  .page-hero { margin-bottom: 20px; }
+  .builder-cta { padding: 22px; border-radius: 16px; }
+  .footer-rich { padding: 40px 0 0; margin-top: 28px; }
+  .foot-grid { padding-bottom: 28px; }
+  .foot-bottom { padding: 12px 0; }
+  .foot-brand p { margin-top: 8px; }
+  .foot-col h4 { margin-bottom: 10px; }
+  .foot-col ul { gap: 8px; }
+  .hero-fashion { width: min(230px, 64vw); }
+  .hero-stats-bar { margin-top: 24px; padding: 14px 8px; }
+  .hero-ctas { margin: 18px 0 6px; }
+  .marquee { padding: 8px 0; }
+  .filters { margin: 14px 0 18px; }
+  .stepper { margin-bottom: 14px; }
+  .builder-nav { margin-top: 14px; }
+  .review-box { padding: 12px; margin-bottom: 12px; }
+  .modal-box { padding: 22px 18px; }
+  .receipt-lines { margin-bottom: 8px; }
+  .pay-chip { margin: 10px 0 4px; }
+  .qr-box { padding: 12px; }
+  .announce { font-size: 12px; }
+  .visit-card { margin-bottom: 20px; }
+  .offer-card .offer-img { height: 150px; }
+  .tf-grid { gap: 14px; }
+  .craftsman-badge { font-size: 12px; padding: 6px 12px; bottom: 12px; left: 12px; }
+}@media (hover: none), (pointer: coarse) {
   .btn { min-height: 44px; }
   .nav-links a { padding: 10px 4px; }
   .size-chip { min-height: 40px; }
