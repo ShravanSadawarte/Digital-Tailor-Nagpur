@@ -7,6 +7,7 @@ import { useCart } from "@/lib/cart";
 import AuthModal, { type AuthMode } from "@/components/AuthModal";
 import { Receipt, inr, type ReceiptLine } from "@/components/Receipt";
 import { Icon } from "@/components/icons";
+import { cached, TTL } from "@/lib/data-cache";
 
 export default function CartPage() {
   const { items, setQty, remove, clear, total } = useCart();
@@ -29,11 +30,12 @@ export default function CartPage() {
     const { data: sub } = sb.auth.onAuthStateChange((_e, s) =>
       setUserId(s?.user.id ?? null)
     );
-    sb.from("shop_settings")
-      .select("upi_qr_url")
-      .eq("id", 1)
-      .single()
-      .then(({ data }) => data?.upi_qr_url && setQr(data.upi_qr_url));
+    cached("settings", "cart:qr", TTL.settings, async () => {
+      const { data } = await sb.from("shop_settings").select("upi_qr_url").eq("id", 1).single();
+      return data?.upi_qr_url || "";
+    }).then((url) => {
+      if (url) setQr(url);
+    });
     return () => sub.subscription.unsubscribe();
   }, []);
 

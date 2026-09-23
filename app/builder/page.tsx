@@ -7,6 +7,7 @@ import PageHero from "@/components/PageHero";
 import AuthModal, { type AuthMode } from "@/components/AuthModal";
 import { Receipt, inr, type ReceiptLine } from "@/components/Receipt";
 import { Icon, type IconName } from "@/components/icons";
+import { cached, TTL } from "@/lib/data-cache";
 
 type Material = {
   id: string;
@@ -79,7 +80,14 @@ export default function BuilderPage() {
     if (q) setDesignRef(q);
     const sb = getSupabase();
     if (!sb) return;
-    sb.from("materials").select("*").eq("available", true).then(({ data }) => data && setMats(data));
+    // Public catalog + QR are cached; the user's own measurements below stay live.
+    cached("catalog", "builder:materials", TTL.catalog, async () => {
+      const { data, error } = await sb.from("materials").select("*").eq("available", true);
+      if (error || !data) return [];
+      return data;
+    }).then((rows) => {
+      if (rows.length > 0) setMats(rows);
+    });
     sb.auth.getSession().then(({ data }) => {
       const uid = data.session?.user.id ?? null;
       setUserId(uid);
@@ -90,8 +98,12 @@ export default function BuilderPage() {
           });
       }
     });
-    sb.from("shop_settings").select("upi_qr_url").eq("id", 1).single()
-      .then(({ data }) => data?.upi_qr_url && setQr(data.upi_qr_url));
+    cached("settings", "builder:qr", TTL.settings, async () => {
+      const { data } = await sb.from("shop_settings").select("upi_qr_url").eq("id", 1).single();
+      return data?.upi_qr_url || "";
+    }).then((url) => {
+      if (url) setQr(url);
+    });
   }, []);
 
   const by = (kind: string) => mats.filter((m) => m.kind === kind);

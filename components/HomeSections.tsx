@@ -8,6 +8,7 @@ import { inr } from "@/components/Receipt";
 import Reveal from "@/components/Reveal";
 import { useSiteContent } from "@/lib/content";
 import { MonoMark, Icon } from "@/components/icons";
+import { cached, TTL } from "@/lib/data-cache";
 
 function offPct(price: number, mrp?: number | null) {
   if (!mrp || mrp <= price) return 0;
@@ -18,13 +19,20 @@ export function ShopPreview() {
   const [products, setProducts] = useState<any[]>([]);
   const sec = useSiteContent<any>("sections");
   useEffect(() => {
-    getSupabase()
-      ?.from("products")
-      .select("*, categories(name)")
-      .eq("available", true)
-      .order("created_at", { ascending: false })
-      .limit(4)
-      .then(({ data }) => data && setProducts(data));
+    cached("catalog", "home:products", TTL.catalog, async () => {
+      const sb = getSupabase();
+      if (!sb) return [];
+      const { data, error } = await sb
+        .from("products")
+        .select("*, categories(name)")
+        .eq("available", true)
+        .order("created_at", { ascending: false })
+        .limit(4);
+      if (error || !data) return [];
+      return data;
+    }).then((rows) => {
+      if (rows.length > 0) setProducts(rows);
+    });
   }, []);
   if (products.length === 0) return null;
   return (
@@ -74,12 +82,19 @@ export function TransformationsPreview() {
   const [rows, setRows] = useState<any[]>([]);
   const sec = useSiteContent<any>("sections");
   useEffect(() => {
-    getSupabase()
-      ?.from("transformation_examples")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(3)
-      .then(({ data }) => data && setRows(data));
+    cached("catalog", "home:tf", TTL.catalog, async () => {
+      const sb = getSupabase();
+      if (!sb) return [];
+      const { data, error } = await sb
+        .from("transformation_examples")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(3);
+      if (error || !data) return [];
+      return data;
+    }).then((rows) => {
+      if (rows.length > 0) setRows(rows);
+    });
   }, []);
   if (rows.length === 0) return null;
   return (
@@ -205,22 +220,24 @@ export function Craftsman() {
 export function OffersStrip() {
   const [offers, setOffers] = useState<any[]>([]);
   useEffect(() => {
-    getSupabase()
-      ?.from("offers")
-      .select("*")
-      .eq("active", true)
-      .order("created_at", { ascending: false })
-      .then(({ data }) => {
-        if (!data) return;
-        const today = new Date().toISOString().slice(0, 10);
-        setOffers(
-          data.filter(
-            (o: any) =>
-              (!o.valid_from || o.valid_from <= today) &&
-              (!o.valid_to || o.valid_to >= today)
-          )
-        );
-      });
+    cached("catalog", "home:offers", TTL.catalog, async () => {
+      const sb = getSupabase();
+      if (!sb) return [];
+      const { data, error } = await sb
+        .from("offers")
+        .select("*")
+        .eq("active", true)
+        .order("created_at", { ascending: false });
+      if (error || !data) return [];
+      const today = new Date().toISOString().slice(0, 10);
+      return data.filter(
+        (o: any) =>
+          (!o.valid_from || o.valid_from <= today) &&
+          (!o.valid_to || o.valid_to >= today)
+      );
+    }).then((rows) => {
+      if (rows.length > 0) setOffers(rows);
+    });
   }, []);
   if (offers.length === 0) return null;
   return (

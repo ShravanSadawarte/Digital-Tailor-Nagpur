@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getSupabase } from "@/lib/supabase/client";
+import { cached, TTL } from "@/lib/data-cache";
 
 /** Demo content — live until the admin saves replacements from /admin → Content. */
 export const CONTENT_DEFAULTS: Record<string, any> = {
@@ -38,27 +39,32 @@ export const CONTENT_DEFAULTS: Record<string, any> = {
   },
 };
 
-const cache: Record<string, any> = {};
-
 /** Live site content for one block; falls back to demo when unset/unreachable. */
 export function useSiteContent<T = any>(key: string): T {
-  const [val, setVal] = useState<T>(() => cache[key] ?? CONTENT_DEFAULTS[key]);
+  const [val, setVal] = useState<T>(() => CONTENT_DEFAULTS[key]);
   useEffect(() => {
-    if (cache[key]) {
-      setVal(cache[key]);
-      return;
-    }
-    getSupabase()
-      ?.from("site_content")
-      .select("value")
-      .eq("key", key)
-      .maybeSingle()
-      .then(({ data, error }) => {
-        if (!error && data?.value && Object.keys(data.value).length > 0) {
-          cache[key] = { ...CONTENT_DEFAULTS[key], ...data.value };
-          setVal(cache[key]);
-        }
-      });
+    let live = true;
+    cached(
+      "content",
+      `content:${key}`,
+      TTL.content,
+      async () => {
+        const sb = getSupabase();
+        if (!sb) return null;
+        const { data, error } = await sb
+          .from("site_content")
+          .select("value")
+          .eq("key", key)
+          .maybeSingle();
+        if (error || !data?.value || Object.keys(data.value).length === 0) return null;
+        return { ...CONTENT_DEFAULTS[key], ...data.value };
+      }
+    ).then((row) => {
+      if (live && row) setVal(row as T);
+    });
+    return () => {
+      live = false;
+    };
   }, [key]);
   return val as T;
 }

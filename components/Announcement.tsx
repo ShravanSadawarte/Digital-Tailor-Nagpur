@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getSupabase } from "@/lib/supabase/client";
+import { cached, TTL } from "@/lib/data-cache";
 
 // Demo bar — stays live until the admin publishes announcements from /admin → Top Bar.
 const DEMO = "Free doorstep pickup across Nagpur • No advance payment • 48-hr delivery";
@@ -12,16 +13,19 @@ export default function Announcement() {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    getSupabase()
-      ?.from("announcements")
-      .select("text")
-      .eq("active", true)
-      .order("created_at", { ascending: false })
-      .then(({ data, error }) => {
-        if (!error && data && data.length > 0) {
-          setItems(data.map((r: any) => String(r.text)).filter(Boolean));
-        }
-      });
+    cached("announcements", "active", TTL.announcements, async () => {
+      const sb = getSupabase();
+      if (!sb) return [];
+      const { data, error } = await sb
+        .from("announcements")
+        .select("text")
+        .eq("active", true)
+        .order("created_at", { ascending: false });
+      if (error || !data) return [];
+      return data.map((r: any) => String(r.text)).filter(Boolean);
+    }).then((texts) => {
+      if (texts.length > 0) setItems(texts);
+    });
   }, []);
 
   useEffect(() => {

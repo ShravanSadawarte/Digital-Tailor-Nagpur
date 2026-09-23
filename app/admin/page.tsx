@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { inr, shortId } from "@/components/Receipt";
 import { SERVICE_ICONS } from "@/components/icons";
+import { invalidate } from "@/lib/data-cache";
 
 const SIZES = ["S", "M", "L", "XL", "XXL"];
 const TABS = ["products", "examples", "materials", "offers", "orders", "settings", "announcements", "content"] as const;
@@ -125,6 +126,7 @@ export default function AdminPage() {
       else {
         setNewAnn("");
         await loadAnncs();
+        invalidate("announcements");
         setMsg("Saved ✅");
       }
     } catch (e: any) { setMsg(e.message); }
@@ -161,6 +163,7 @@ export default function AdminPage() {
         body: JSON.stringify({ key, value: content[key] || {} }),
       });
       const j = await res.json();
+      if (j.ok) invalidate("content");
       setMsg(j.ok ? "Content saved ✅ — live on the site now." : j.error);
     } catch (e: any) { setMsg(e.message); }
     finally { setBusy(false); }
@@ -211,6 +214,7 @@ export default function AdminPage() {
       else await api(resource, "PATCH", { ...payload, id: editing });
       setEditing(null); setForm({}); setFiles([]);
       await loadTab(tab);
+      invalidate("catalog"); // storefront lists refetch on next visit
       setMsg("Saved ✅");
     } catch (e: any) { setMsg(e.message); }
     finally { setBusy(false); }
@@ -218,7 +222,7 @@ export default function AdminPage() {
 
   const remove = async (id: string) => {
     if (!confirm("Delete this item?")) return;
-    try { await api(`${resource}?id=${id}`, "DELETE"); await loadTab(tab); }
+    try { await api(`${resource}?id=${id}`, "DELETE"); await loadTab(tab); invalidate("catalog"); }
     catch (e: any) { setMsg(e.message); }
   };
 
@@ -253,7 +257,7 @@ export default function AdminPage() {
         body: JSON.stringify({ upi_id: settings.upi_id, upi_qr_url: qr, notice: settings.notice }),
       });
       const j = await res.json();
-      if (j.settings) { setSettings(j.settings); setQrFile(null); setMsg("Settings saved ✅"); }
+      if (j.settings) { setSettings(j.settings); setQrFile(null); invalidate("settings"); setMsg("Settings saved ✅"); }
       else setMsg(j.error);
     } catch (e: any) { setMsg(e.message); }
     finally { setBusy(false); }

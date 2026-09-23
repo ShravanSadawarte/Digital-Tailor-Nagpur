@@ -9,6 +9,7 @@ import { inr } from "@/components/Receipt";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import { MonoMark } from "@/components/icons";
+import { cached, TTL } from "@/lib/data-cache";
 
 type Product = {
   id: string;
@@ -40,18 +41,28 @@ export default function ShopPage() {
       setLoading(false);
       return;
     }
-    sb.from("categories")
-      .select("*")
-      .eq("kind", "product")
-      .then(({ data }) => data && setCats(data));
-    sb.from("products")
-      .select("*, categories(name)")
-      .eq("available", true)
-      .order("created_at", { ascending: false })
-      .then(({ data }) => {
-        if (data) setProducts(data as Product[]);
-        setLoading(false);
-      });
+    cached("catalog", "shop:categories", TTL.catalog, async () => {
+      const { data, error } = await sb
+        .from("categories")
+        .select("*")
+        .eq("kind", "product");
+      if (error || !data) return [];
+      return data;
+    }).then((rows) => {
+      if (rows.length > 0) setCats(rows);
+    });
+    cached("catalog", "shop:products", TTL.catalog, async () => {
+      const { data, error } = await sb
+        .from("products")
+        .select("*, categories(name)")
+        .eq("available", true)
+        .order("created_at", { ascending: false });
+      if (error || !data) return [];
+      return data as Product[];
+    }).then((rows) => {
+      if (rows.length > 0) setProducts(rows);
+      setLoading(false);
+    });
   }, []);
 
   const list = products.filter(

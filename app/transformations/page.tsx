@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getSupabase } from "@/lib/supabase/client";
 import PageHero from "@/components/PageHero";
 import { MonoMark, Icon } from "@/components/icons";
+import { cached, TTL } from "@/lib/data-cache";
 
 type Example = {
   id: string;
@@ -20,11 +21,18 @@ export default function TransformationsPage() {
   const [rows, setRows] = useState<Example[]>([]);
 
   useEffect(() => {
-    getSupabase()
-      ?.from("transformation_examples")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .then(({ data }) => data && setRows(data));
+    cached("catalog", "tf:list", TTL.catalog, async () => {
+      const sb = getSupabase();
+      if (!sb) return [];
+      const { data, error } = await sb
+        .from("transformation_examples")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error || !data) return [];
+      return data;
+    }).then((rows) => {
+      if (rows.length > 0) setRows(rows);
+    });
   }, []);
 
   return (
