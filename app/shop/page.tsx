@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getSupabase } from "@/lib/supabase/client";
-import { useCart } from "@/lib/cart";
 import { inr } from "@/components/Receipt";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
@@ -30,12 +29,9 @@ export default function ShopPage() {
   const [cats, setCats] = useState<Category[]>([]);
   const [cat, setCat] = useState("all");
   const [size, setSize] = useState("all");
-  const [picked, setPicked] = useState<Record<string, string>>({});
-  const [added, setAdded] = useState("");
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
   const [sheet, setSheet] = useState(false);
-  const { add } = useCart();
 
   useEffect(() => {
     if (!sheet) return;
@@ -106,17 +102,6 @@ export default function ShopPage() {
     setCat("all");
     setSize("all");
     setQ("");
-  };
-
-  const addToCart = (p: Product) => {
-    const s = picked[p.id] || p.sizes[0];
-    if (!s) return;
-    add(
-      { product_id: p.id, name: p.name, price: p.price, size: s, image: p.images?.[0] },
-      1
-    );
-    setAdded(p.id);
-    setTimeout(() => setAdded(""), 1500);
   };
 
   return (
@@ -249,7 +234,7 @@ export default function ShopPage() {
                 const off = p.mrp && p.mrp > p.price ? Math.round((1 - p.price / p.mrp) * 100) : 0;
                 return (
                 <Reveal key={p.id}>
-                <div className="card product-card lift">
+                <Link href={`/shop/${p.id}`} className="card product-card lift">
             <div className="product-media">
               {off > 0 && <span className="off-badge">{off}% off</span>}
               {p.images?.[0] ? (
@@ -266,7 +251,6 @@ export default function ShopPage() {
             </div>
             <div className="product-cat">{p.categories?.name || "Boutique"}</div>
             <h3>{p.name}</h3>
-            <p className="muted">{p.description}</p>
             <div className="price-line">
               <strong>{inr(p.price)}</strong>
               {p.mrp ? <s>{inr(p.mrp)}</s> : null}
@@ -275,25 +259,7 @@ export default function ShopPage() {
               )}
               {p.stock <= 0 && <span className="stock-out">Out of stock</span>}
             </div>
-            <div className="size-row">
-              {p.sizes.map((s) => (
-                <button
-                  key={s}
-                  className={`size-chip${(picked[p.id] || p.sizes[0]) === s ? " sel" : ""}`}
-                  onClick={() => setPicked({ ...picked, [p.id]: s })}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-            <button
-              className="btn btn-primary btn-block"
-              disabled={p.stock <= 0}
-              onClick={() => addToCart(p)}
-            >
-              {added === p.id ? "Added ✓" : "Add to Bag"}
-            </button>
-            </div>
+            </Link>
           </Reveal>
                 );
               })}

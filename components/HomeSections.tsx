@@ -53,7 +53,7 @@ export function ShopPreview() {
         <div className="product-grid mini">
           {products.map((p, i) => (
             <Reveal key={p.id} delay={Math.min(i, 3) * 80}>
-            <Link href="/shop" className="card product-card lift">
+            <Link href={`/shop/${p.id}`} className="card product-card lift">
               <div className="product-media">
                 {offPct(p.price, p.mrp) > 0 && (
                   <span className="off-badge">{offPct(p.price, p.mrp)}% off</span>
