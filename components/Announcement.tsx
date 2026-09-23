@@ -9,6 +9,23 @@ const DEMO = "Free doorstep pickup across Nagpur • No advance payment • 48-h
 
 export default function Announcement() {
   const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem("dt_ann_closed") === "1") setOpen(false);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const dismiss = () => {
+    setOpen(false);
+    try {
+      window.localStorage.setItem("dt_ann_closed", "1");
+    } catch {
+      /* ignore */
+    }
+  };
   const [items, setItems] = useState<string[]>([]);
   const [idx, setIdx] = useState(0);
 
@@ -43,7 +60,7 @@ export default function Announcement() {
       <button
         className="announce-close"
         aria-label="Dismiss announcement"
-        onClick={() => setOpen(false)}
+        onClick={dismiss}
       >
         ✕
       </button>
