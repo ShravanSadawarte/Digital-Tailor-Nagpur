@@ -1264,6 +1264,12 @@ img { max-width: 100%; }
 /* Shop preview trailing card (mobile scroller only) */
 .view-all-card { display: none; }
 
+/* Shop tab: category-wise groups */
+.shop-groups { display: grid; gap: 26px; }
+.shop-cat-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 4px 0 12px; }
+.shop-cat-head h2 { font-size: 22px; margin: 0; }
+.shop-cat-head span { font-size: 13px; color: var(--muted); white-space: nowrap; }
+
 /* ============ Stage-4 mobile refinement (phone alignment only) ============ */
 @media (max-width: 860px) {
   /* Hero final tighten */
@@ -1423,6 +1429,21 @@ img { max-width: 100%; }
     color: #fff; font-size: 18px; font-weight: 800;
   }
   .tf-preview .grid3 .view-all-card strong { font-size: 13px; }
+
+  /* Shop tab: each category swipes horizontally (phone) */
+  .shop-groups { gap: 20px; }
+  .shop-cat-head { margin: 2px 0 10px; }
+  .shop-cat-head h2 { font-size: 17px; }
+  .shop-cat-head span { font-size: 12px; }
+  .shop-cat-grid {
+    display: flex; overflow-x: auto; gap: 10px;
+    margin: 0 -16px; padding: 2px 16px 8px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .shop-cat-grid::-webkit-scrollbar { display: none; }
+  .shop-cat-grid .reveal { flex: 0 0 160px; scroll-snap-align: start; }
+  .shop-cat-grid .product-card { height: 100%; }
 
   /* Services: compact 3-up, icon + heading only */
   #services .muted { display: none; }

@@ -89,6 +89,19 @@ export default function ShopPage() {
     return okCat && okSize && okQ;
   });
   const activeFilters = (cat !== "all" ? 1 : 0) + (size !== "all" ? 1 : 0);
+  const groups = (() => {
+    const byName = new Map<string, Product[]>();
+    list.forEach((p) => {
+      const name = p.categories?.name || "Boutique";
+      if (!byName.has(name)) byName.set(name, []);
+      byName.get(name)!.push(p);
+    });
+    const ordered = cats.map((c) => c.name).filter((n) => byName.has(n));
+    byName.forEach((_v, n) => {
+      if (!ordered.includes(n)) ordered.push(n);
+    });
+    return ordered.map((name) => ({ name, items: byName.get(name)! }));
+  })();
   const clearAll = () => {
     setCat("all");
     setSize("all");
@@ -224,12 +237,19 @@ export default function ShopPage() {
         </div>
       )}
 
-      <div className="product-grid">
-        {list.map((p) => {
-          const off = p.mrp && p.mrp > p.price ? Math.round((1 - p.price / p.mrp) * 100) : 0;
-          return (
-          <Reveal key={p.id}>
-          <div className="card product-card lift">
+      <div className="shop-groups">
+        {groups.map((g) => (
+          <section key={g.name} className="shop-cat">
+            <div className="shop-cat-head">
+              <h2>{g.name}</h2>
+              <span>{g.items.length} item{g.items.length === 1 ? "" : "s"}</span>
+            </div>
+            <div className="product-grid shop-cat-grid">
+              {g.items.map((p) => {
+                const off = p.mrp && p.mrp > p.price ? Math.round((1 - p.price / p.mrp) * 100) : 0;
+                return (
+                <Reveal key={p.id}>
+                <div className="card product-card lift">
             <div className="product-media">
               {off > 0 && <span className="off-badge">{off}% off</span>}
               {p.images?.[0] ? (
@@ -273,10 +293,13 @@ export default function ShopPage() {
             >
               {added === p.id ? "Added ✓" : "Add to Bag"}
             </button>
-          </div>
+            </div>
           </Reveal>
-          );
-        })}
+                );
+              })}
+            </div>
+          </section>
+        ))}
       </div>
 
       <div className="page-cta">
