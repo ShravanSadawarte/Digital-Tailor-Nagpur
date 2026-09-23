@@ -1355,6 +1355,10 @@ img { max-width: 100%; }
   #craftsman h2 { font-size: 20px; }
   #craftsman .muted { font-size: 13px; }
   #craftsman .contact-list li { font-size: 13px; }
+  /* Craftsman photo: white mat so the frame reads on the tinted section */
+  .craftsman-photo { background: #fff; padding: 10px; border-radius: 22px; border: 1px solid var(--fawn-line); box-shadow: var(--shadow-md); }
+  .craftsman-photo img, .craftsman-photo .craftsman-ph { border-radius: 14px; border: none; box-shadow: none; }
+  .craftsman-badge { bottom: 20px; left: 20px; }
 
   /* Numbered steps: keep number + text in a clean hanging indent */
   #booking .contact-list li, #craftsman .contact-list li { gap: 8px; }
