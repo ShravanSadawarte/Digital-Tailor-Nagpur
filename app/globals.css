@@ -40,7 +40,7 @@ a { text-decoration: none; color: inherit; }
 .nav-links a.active, .nav-links a:hover { color: var(--eminence); }
 .nav-actions { display: flex; gap: 12px; align-items: center; }
 
-.btn { display: inline-block; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 15px; border: 1.5px solid transparent; cursor: pointer; transition: .2s; text-align: center; }
+.btn { display: inline-block; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 15px; letter-spacing: .2px; border: 1.5px solid transparent; cursor: pointer; transition: .2s; text-align: center; }
 .btn-primary { background: var(--sunset); color: #fff; }
 .btn-primary:hover { background: var(--primary-dark); }
 .btn-outline { border-color: var(--fawn-line); color: var(--ink); background: var(--white); }
@@ -68,7 +68,7 @@ a { text-decoration: none; color: inherit; }
 .hero-stats strong { font-size: 22px; color: var(--on-dark); }
 .hero-stats span { font-size: 13px; color: var(--on-dark-muted); }
 
-.card { background: #fff; color: var(--ink); border-radius: 16px; padding: 28px; box-shadow: 0 20px 50px rgba(51,12,75,.22); border: 1px solid var(--fawn-line); }
+.card { background: #fff; color: var(--ink); border-radius: 16px; padding: 28px; box-shadow: var(--shadow-md); border: 1px solid var(--fawn-line); }
 .card h3 { font-size: 22px; margin-bottom: 6px; }
 .card p { color: var(--muted); font-size: 14px; }
 .price-row { display: flex; justify-content: space-between; align-items: center; margin: 16px 0; background: var(--plum-mist); padding: 10px 14px; border-radius: 8px; }
@@ -870,6 +870,35 @@ body {
   display: flex; justify-content: space-between; align-items: flex-start;
   gap: 14px; flex-wrap: wrap; margin-bottom: 6px;
 }
+
+/* ================= v3 refinement — polish only, no new elements ================= */
+
+/* Anchor offset under the sticky navbar */
+#services, #contact, #craftsman, #visit, #booking { scroll-margin-top: 84px; }
+
+/* Balanced headlines, tabular prices, soft placeholders */
+.section h2, .page-title, .page-hero h1, .hero-v2 h1 { text-wrap: balance; }
+.price-line strong, .receipt-total strong, .hero-stats-bar strong,
+.receipt-line strong, .cart-info strong { font-variant-numeric: tabular-nums; }
+.form input::placeholder, .form textarea::placeholder,
+.checkout input::placeholder, .checkout textarea::placeholder,
+.modal-box input::placeholder { color: #B99BC0; opacity: 1; }
+.tf-mini h3, .product-card h3, .order-head strong { overflow-wrap: break-word; }
+
+/* Brand scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--eminence), var(--sunset)); border-radius: 8px; border: 2px solid var(--cream); }
+html { scrollbar-color: var(--eminence) var(--cream); }
+
+/* Modal brand edge */
+.modal-box { border-top: 4px solid var(--sunset); }
+
+/* Card hover border glow (pairs with lift) */
+.lift:hover, .feature:hover { border-color: #E9B8D8; }
+
+/* Announcement rhythm */
+.announce { letter-spacing: .2px; }
 
 /* ================= Mobile-first responsive ================= */
 body { overflow-x: clip; }
