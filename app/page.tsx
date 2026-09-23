@@ -23,9 +23,9 @@ export default function Home() {
       <main id="home">
         <Hero onSignup={() => setAuthMode("signup")} />
         <Marquee />
-        <OffersStrip />
-        <Services />
         <ShopPreview />
+        <Services />
+        <OffersStrip />
         <TransformationsPreview />
         <BuilderCTA />
         <Craftsman />
