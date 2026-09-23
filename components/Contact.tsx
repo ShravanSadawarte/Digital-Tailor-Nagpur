@@ -53,15 +53,15 @@ export default function Contact() {
           <ul className="contact-list">
             <li>
               <Icon name="pin" size={17} />
-              <span><strong>Address:</strong> 26B, Hanuman Society, Vaishali Nagar, Nagpur, Maharashtra 440017</span>
+              <span><strong>Address:</strong> <a href="https://www.google.com/maps/search/?api=1&query=26B%2C%20Hanuman%20Society%2C%20Vaishali%20Nagar%2C%20Nagpur%2C%20Maharashtra%20440017" target="_blank" rel="noopener noreferrer">26B, Hanuman Society, Vaishali Nagar, Nagpur, Maharashtra 440017</a></span>
             </li>
             <li>
               <Icon name="phone" size={17} />
-              <span><strong>Phone:</strong> +91 98765 43210</span>
+              <span><strong>Phone:</strong> <a href="tel:+919876543210">+91 98765 43210</a></span>
             </li>
             <li>
               <Icon name="mail" size={17} />
-              <span><strong>Email:</strong> hello@digitaltailor.in</span>
+              <span><strong>Email:</strong> <a href="mailto:hello@digitaltailor.in">hello@digitaltailor.in</a></span>
             </li>
             <li>
               <Icon name="clock" size={17} />

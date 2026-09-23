@@ -43,9 +43,9 @@ export default function Footer() {
           <div className="foot-col">
             <h4>Visit Us</h4>
             <ul>
-              <li><Icon name="pin" size={16} />26B, Hanuman Society, Vaishali Nagar, Nagpur 440017</li>
-              <li><Icon name="phone" size={16} />+91 98765 43210</li>
-              <li><Icon name="mail" size={16} />hello@digitaltailor.in</li>
+              <li><Icon name="pin" size={16} /><a href="https://www.google.com/maps/search/?api=1&query=26B%2C%20Hanuman%20Society%2C%20Vaishali%20Nagar%2C%20Nagpur%2C%20Maharashtra%20440017" target="_blank" rel="noopener noreferrer">26B, Hanuman Society, Vaishali Nagar, Nagpur 440017</a></li>
+              <li><Icon name="phone" size={16} /><a href="tel:+919876543210">+91 98765 43210</a></li>
+              <li><Icon name="mail" size={16} /><a href="mailto:hello@digitaltailor.in">hello@digitaltailor.in</a></li>
               <li><Icon name="clock" size={16} />Mon–Sat, 10am – 8pm</li>
             </ul>
           </div>

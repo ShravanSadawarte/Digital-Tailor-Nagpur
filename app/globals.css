@@ -1007,8 +1007,78 @@ img { max-width: 100%; }
   .marquee-item { font-size: 13.5px; padding: 0 18px; }
 }
 
-/* Touch devices: roomy targets, no sticky hovers, no iOS input zoom */
-@media (hover: none), (pointer: coarse) {
+/* ============ Stage-2 real-device mobile polish (≤860px) ============ */
+@media (max-width: 860px) {
+  /* Compact header */
+  .nav-inner { height: 56px; }
+  .logo { font-size: 16px; gap: 8px; }
+  .logo-icon { width: 32px; height: 32px; }
+  .logo-icon .icon { width: 19px; height: 19px; }
+  .hamburger { padding: 10px; margin-right: -10px; }
+  .nav-actions .btn { padding: 8px 14px; font-size: 14px; }
+  .profile-icon { width: 40px; height: 40px; }
+
+  /* Quiet announcement */
+  .announce { padding: 7px 40px 7px 12px; line-height: 1.45; }
+
+  /* Hero: content-driven height, stacked CTAs, contained graphic */
+  .hero-v2 { padding: 40px 0 32px; }
+  .hero-v2 .hero-grid { gap: 28px; }
+  .hero-v2 h1 { font-size: 38px; line-height: 1.1; margin: 14px 0 10px; }
+  .hero-sub { font-size: 16px; }
+  .hero-ctas { flex-direction: column; gap: 10px; margin: 20px 0 8px; }
+  .hero-ctas .btn { flex: none; width: 100%; min-height: 52px; font-size: 16px; }
+  .hero-signup-link { margin-bottom: 14px; }
+  .hero-loc { font-size: 13px; margin-bottom: 0; }
+  .hero-visual { overflow: hidden; padding: 8px 0 20px; }
+  .hero-blob { width: min(320px, 88vw); height: auto; aspect-ratio: 1; top: 0; }
+  .hero-fashion { width: min(250px, 68vw); }
+  .hero-stats-bar { margin-top: 28px; padding: 16px 8px; }
+  .hero-stats-bar strong { font-size: 20px; }
+  .hero-stats-bar span { font-size: 12px; }
+
+  /* Even section rhythm */
+  .section { padding: 40px 0; }
+  .section h2 { font-size: 25px; }
+  .muted { margin-bottom: 18px; }
+  .grid3 { gap: 14px; }
+  .feature { padding: 18px; }
+  .f-icon { margin-bottom: 6px; }
+  .f-icon .icon { width: 30px; height: 30px; }
+  .feature h3 { font-size: 17px; margin-bottom: 4px; }
+  .feature p { font-size: 14px; }
+
+  /* Craftsman placeholder stops dominating */
+  .craftsman-ph { aspect-ratio: 16/9; }
+  .craftsman-grid { gap: 20px; }
+  .contact-list { gap: 8px; }
+
+  /* Visit + contact comfort */
+  .visit-card { padding: 22px 18px; }
+  .visit-addr { font-size: 17px; }
+  .contact-list a { color: inherit; }
+  .foot-col a[href^="tel:"], .foot-col a[href^="mailto:"] { color: var(--fawn); }
+  .form input, .form textarea, .form select,
+  .checkout input, .checkout textarea,
+  .modal-box input { padding: 13px 14px; }
+
+  /* To-top docks just above the tab bar, visually quiet */
+  .to-top {
+    width: 44px; height: 44px; font-size: 18px; left: 12px;
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 8px 20px rgba(81, 1, 124, .35);
+  }
+}
+
+@media (max-width: 560px) {
+  .product-img, .product-ph { height: 150px; }
+  .product-ph { font-size: 48px; }
+  .offer-img { height: auto; max-height: 200px; object-fit: contain; background: #fff; }
+  .tf-cta { min-height: 50px; }
+  .sec-head .btn { min-height: 46px; }
+}
+
+/* Touch devices: roomy targets, no sticky hovers, no iOS input zoom */@media (hover: none), (pointer: coarse) {
   .btn { min-height: 44px; }
   .nav-links a { padding: 10px 4px; }
   .size-chip { min-height: 40px; }
