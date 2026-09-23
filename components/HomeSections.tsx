@@ -104,7 +104,7 @@ export function TransformationsPreview() {
   }, []);
   if (rows.length === 0) return null;
   return (
-    <section className="section alt">
+    <section className="section alt tf-preview">
       <div className="container">
         <Reveal>
         <div className="sec-head">
@@ -153,6 +153,12 @@ export function TransformationsPreview() {
             </div>
             </Reveal>
           ))}
+          <Reveal delay={270}>
+            <Link href="/transformations" className="feature tf-mini view-all-card" aria-label="See all transformations">
+              <span className="view-all-arrow" aria-hidden>→</span>
+              <strong>See all</strong>
+            </Link>
+          </Reveal>
         </div>
       </div>
     </section>
