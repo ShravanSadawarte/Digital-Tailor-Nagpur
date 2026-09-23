@@ -48,6 +48,48 @@ export function OrderSteps({ status }: { status: string }) {
 export type ReceiptLine = { label: string; amount?: number };
 export const inr = (n: number) => `₹${Number(n || 0).toLocaleString("en-IN")}`;
 
+/** Small success popup shown right after an order is placed. */
+export function OrderSuccess(props: {
+  open: boolean;
+  orderNo: string;
+  total: number;
+  pay: string;
+  onView: () => void;
+  onDone: () => void;
+}) {
+  const { open, orderNo, total, pay, onView, onDone } = props;
+  if (!open) return null;
+  return (
+    <div
+      className="modal open"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onDone();
+      }}
+    >
+      <div className="modal-box success">
+        <div className="success-check" aria-hidden>✓</div>
+        <h2>Order placed!</h2>
+        <p className="success-sub">Thank you! Your order is confirmed.</p>
+        <div className="receipt-meta">
+          <span>
+            Order <strong>#{shortId(orderNo)}</strong>
+          </span>
+          <strong>{inr(total)}</strong>
+        </div>
+        <p className="pay-chip">{payLabel(pay)}</p>
+        <div className="success-actions">
+          <button className="btn btn-outline btn-block" onClick={onView}>
+            View Receipt
+          </button>
+          <button className="btn btn-primary btn-block" onClick={onDone}>
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Receipt(props: {
   open: boolean;
   onClose: () => void;

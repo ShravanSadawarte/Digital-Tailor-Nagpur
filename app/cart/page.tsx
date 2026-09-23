@@ -5,7 +5,7 @@ import Image from "next/image";
 import { getSupabase } from "@/lib/supabase/client";
 import { useCart } from "@/lib/cart";
 import AuthModal, { type AuthMode } from "@/components/AuthModal";
-import { Receipt, inr, type ReceiptLine } from "@/components/Receipt";
+import { Receipt, OrderSuccess, inr, type ReceiptLine } from "@/components/Receipt";
 import { Icon } from "@/components/icons";
 import { cached, TTL } from "@/lib/data-cache";
 
@@ -22,6 +22,8 @@ export default function CartPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [receipt, setReceipt] = useState<any>(null);
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [receiptOpen, setReceiptOpen] = useState(false);
 
   useEffect(() => {
     const sb = getSupabase();
@@ -99,6 +101,7 @@ export default function CartPage() {
         amount: i.qty * i.price,
       }));
       setReceipt({ ...order, payment_status, lines });
+      setSuccessOpen(true);
       clear();
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Order failed.");
@@ -200,9 +203,29 @@ export default function CartPage() {
         </div>
       )}
       {receipt && (
+        <OrderSuccess
+          open={successOpen}
+          orderNo={receipt.id}
+          total={receipt.total}
+          pay={receipt.payment_status}
+          onView={() => {
+            setSuccessOpen(false);
+            setReceiptOpen(true);
+          }}
+          onDone={() => {
+            setSuccessOpen(false);
+            setReceiptOpen(false);
+            setReceipt(null);
+          }}
+        />
+      )}
+      {receipt && (
         <Receipt
-          open
-          onClose={() => setReceipt(null)}
+          open={receiptOpen}
+          onClose={() => {
+            setReceiptOpen(false);
+            setReceipt(null);
+          }}
           title="Order Receipt"
           orderNo={receipt.id}
           date={new Date(receipt.created_at).toLocaleString("en-IN")}

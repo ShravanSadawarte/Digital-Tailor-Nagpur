@@ -1286,6 +1286,20 @@ img { max-width: 100%; }
 .pdp-sec { font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--sunset); margin: 16px 0 8px; }
 .pdp-actions { display: grid; gap: 10px; margin-top: 18px; }
 
+/* Small order-success popup */
+.modal-box.success { max-width: 320px; text-align: center; }
+.modal-box.success h2 { margin: 0; font-size: 22px; }
+.success-check {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: grid; place-items: center; margin: 2px auto 12px;
+  background: linear-gradient(135deg, #4ade80, #16a34a);
+  color: #fff; font-size: 28px; font-weight: 800;
+  box-shadow: 0 10px 24px rgba(22, 163, 74, .4);
+}
+.success-sub { color: var(--muted); font-size: 14px; margin: 6px 0 0; }
+.modal-box.success .receipt-meta { margin-top: 12px; text-align: left; }
+.success-actions { display: grid; gap: 10px; margin-top: 14px; }
+
 /* ============ Stage-4 mobile refinement (phone alignment only) ============ */
 @media (max-width: 860px) {
   /* Hero final tighten */

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { getSupabase } from "@/lib/supabase/client";
 import PageHero from "@/components/PageHero";
 import AuthModal, { type AuthMode } from "@/components/AuthModal";
-import { Receipt, inr, type ReceiptLine } from "@/components/Receipt";
+import { Receipt, OrderSuccess, inr, type ReceiptLine } from "@/components/Receipt";
 import { Icon, type IconName } from "@/components/icons";
 import { cached, TTL } from "@/lib/data-cache";
 
@@ -74,6 +74,8 @@ export default function BuilderPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [receipt, setReceipt] = useState<any>(null);
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [receiptOpen, setReceiptOpen] = useState(false);
 
   useEffect(() => {
     const q = new URLSearchParams(window.location.search).get("ref");
@@ -184,6 +186,7 @@ export default function BuilderPage() {
         { label: "Stitching base", amount: BASE },
       ];
       setReceipt({ ...order, payment_status, lines });
+      setSuccessOpen(true);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Order failed.");
     } finally {
@@ -341,7 +344,27 @@ export default function BuilderPage() {
 
       <AuthModal mode={authMode} onClose={() => setAuthMode(null)} />
       {receipt && (
-        <Receipt open onClose={() => setReceipt(null)} title="Custom Order Receipt"
+        <OrderSuccess
+          open={successOpen}
+          orderNo={receipt.id}
+          total={receipt.estimate}
+          pay={receipt.payment_status}
+          onView={() => {
+            setSuccessOpen(false);
+            setReceiptOpen(true);
+          }}
+          onDone={() => {
+            setSuccessOpen(false);
+            setReceiptOpen(false);
+            setReceipt(null);
+          }}
+        />
+      )}
+      {receipt && (
+        <Receipt open={receiptOpen} onClose={() => {
+          setReceiptOpen(false);
+          setReceipt(null);
+        }} title="Custom Order Receipt"
           orderNo={receipt.id} date={new Date(receipt.created_at).toLocaleString("en-IN")}
           lines={receipt.lines} total={receipt.estimate} pay={receipt.payment_status} />
       )}
