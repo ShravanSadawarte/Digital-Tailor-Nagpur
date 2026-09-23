@@ -51,6 +51,24 @@ insert into public.transformation_examples (title, dress_type, description) valu
   ('Plain Suit → Designer Suit', 'Salwar Suit', 'Simple suit upgraded with neck redesign, lace sleeves and latkans.')
 on conflict do nothing;
 
+-- Demo photos (local files in public/demo, free-to-use Unsplash images)
+update public.products set images = array['/demo/kurti-festive.jpg'] where name = 'Festive Rayon Kurti';
+update public.products set images = array['/demo/kurti-handloom.jpg'] where name = 'Handloom Cotton Kurti';
+update public.products set images = array['/demo/salwar-classic.jpg'] where name = 'Classic Salwar Suit';
+update public.products set images = array['/demo/gown-anarkali.jpg'] where name = 'Evening Anarkali Gown';
+update public.products set images = array['/demo/plazo-set.jpg'] where name = 'Kurti + Plazo Set';
+update public.products set images = array['/demo/pant-kurti.jpg'] where name = 'Pant Kurti Set';
+
+update public.transformation_examples
+set before_image = '/demo/tf-saree-before.jpg', after_image = '/demo/gown-anarkali.jpg'
+where title = 'Old Saree → Anarkali Gown';
+update public.transformation_examples
+set before_image = '/demo/tf-green-saree.jpg', after_image = '/demo/plazo-set.jpg'
+where title = 'Leftover Fabric → Kurti + Plazo';
+update public.transformation_examples
+set before_image = '/demo/tf-suit-before.jpg', after_image = '/demo/salwar-classic.jpg'
+where title = 'Plain Suit → Designer Suit';
+
 -- Sample offer
 insert into public.offers (title, description, conditions, active) values
   ('Festive Special — 1 Free Stitching on 4 Dresses',
