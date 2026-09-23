@@ -1263,6 +1263,9 @@ img { max-width: 100%; }
   .cart-sticky, .filters-toggle { display: none; }
 }
 
+/* Shop preview trailing card (mobile scroller only) */
+.view-all-card { display: none; }
+
 /* ============ Stage-4 mobile refinement (phone alignment only) ============ */
 @media (max-width: 860px) {
   /* Hero final tighten */
@@ -1353,6 +1356,34 @@ img { max-width: 100%; }
   /* Numbered steps: keep number + text in a clean hanging indent */
   #booking .contact-list li, #craftsman .contact-list li { gap: 8px; }
   .contact-list li strong { flex: none; }
+
+  /* Shop preview: 25% smaller cards in invisible horizontal scroll */
+  .shop-preview .sec-head .btn { display: none; }
+  .product-grid.mini {
+    display: flex; overflow-x: auto; gap: 10px;
+    margin: 0 -16px; padding: 2px 16px 8px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .product-grid.mini::-webkit-scrollbar { display: none; }
+  .product-grid.mini .reveal { flex: 0 0 120px; scroll-snap-align: start; }
+  .product-grid.mini .product-card { height: 100%; padding: 10px; gap: 5px; }
+  .product-grid.mini .product-img, .product-grid.mini .product-ph { height: 96px; }
+  .product-grid.mini .product-card h3 { font-size: 13px; }
+  .product-grid.mini .price-line strong { font-size: 15px; }
+  .product-grid.mini .price-line s { font-size: 11px; }
+  .product-grid.mini .off-badge { font-size: 10px; padding: 2px 8px; top: 8px; left: 8px; }
+  .product-grid.mini .view-all-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; min-height: 218px; text-align: center;
+  }
+  .product-grid.mini .view-all-arrow {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--sunset), var(--eminence));
+    color: #fff; font-size: 18px; font-weight: 800;
+  }
+  .product-grid.mini .view-all-card strong { font-size: 13px; }
 
   /* Services: compact 3-up, icon + heading only */
   #services .muted { display: none; }

@@ -36,7 +36,7 @@ export function ShopPreview() {
   }, []);
   if (products.length === 0) return null;
   return (
-    <section className="section">
+    <section className="section shop-preview">
       <div className="container">
         <Reveal>
         <div className="sec-head">
@@ -72,6 +72,12 @@ export function ShopPreview() {
             </Link>
             </Reveal>
           ))}
+          <Reveal delay={320}>
+            <Link href="/shop" className="card product-card lift view-all-card" aria-label="View all products">
+              <span className="view-all-arrow" aria-hidden>→</span>
+              <strong>View all</strong>
+            </Link>
+          </Reveal>
         </div>
       </div>
     </section>
