@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getServiceClient } from "@/lib/supabase/admin";
+import { imageFile, reqOneOf, uuid, ValidationError } from "@/lib/validate";
+import { isSameOrigin, safeError } from "@/lib/api-guard";
 
 // Customer uploads UPI payment screenshot for their own order.
 // POST formData { kind: "shop"|"custom", orderId, file } → { proof_url }
@@ -11,13 +13,20 @@ export async function POST(req: Request) {
   if (!user) return NextResponse.json({ error: "Login required." }, { status: 401 });
 
   const form = await req.formData();
-  const kind = String(form.get("kind") || "shop");
-  const orderId = String(form.get("orderId") || "");
-  const file = form.get("file") as File | null;
-  if (!file || !orderId || !["shop", "custom"].includes(kind))
-    return NextResponse.json({ error: "Bad request." }, { status: 400 });
-  if (file.size > 5 * 1024 * 1024)
-    return NextResponse.json({ error: "Image must be under 5MB." }, { status: 400 });
+  if (!isSameOrigin(req.headers.get("host") || "", req.headers.get("origin"), req.headers.get("referer")))
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  let kind: "shop" | "custom";
+  let orderId: string;
+  let file: Blob;
+  let ext: string;
+  try {
+    kind = reqOneOf(String(form.get("kind") || "shop"), "kind", ["shop", "custom"] as const);
+    orderId = uuid(String(form.get("orderId") || ""));
+    ({ file, ext } = imageFile(form.get("file")));
+  } catch (e) {
+    const status = e instanceof ValidationError ? 422 : 400;
+    return NextResponse.json({ error: safeError(e) }, { status });
+  }
 
   const table = kind === "custom" ? "custom_orders" : "shop_orders";
   const svc = getServiceClient();
@@ -29,17 +38,16 @@ export async function POST(req: Request) {
   if (fetchErr || !order || order.user_id !== user.id)
     return NextResponse.json({ error: "Order not found." }, { status: 404 });
 
-  const ext = (file.name.split(".").pop() || "jpg").slice(0, 5);
   const path = `${kind}/${orderId}/${Date.now()}.${ext}`;
   const { error: upErr } = await svc.storage
     .from("payment-proofs")
-    .upload(path, file, { contentType: file.type || "image/jpeg" });
-  if (upErr) return NextResponse.json({ error: upErr.message }, { status: 400 });
+    .upload(path, file, { contentType: (file as File).type || "image/jpeg" });
+  if (upErr) return NextResponse.json({ error: safeError(upErr) }, { status: 400 });
 
   const { error: updErr } = await svc
     .from(table)
     .update({ proof_url: path, payment_status: "awaiting_verification" })
     .eq("id", orderId);
-  if (updErr) return NextResponse.json({ error: updErr.message }, { status: 400 });
+  if (updErr) return NextResponse.json({ error: safeError(updErr) }, { status: 400 });
   return NextResponse.json({ proof_url: path });
 }

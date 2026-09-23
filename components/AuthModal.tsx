@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
+import { friendlyError } from "@/lib/client-error";
 
 export type AuthMode = "login" | "signup";
 
@@ -85,7 +86,7 @@ export default function AuthModal({ mode, onClose }: Props) {
         onClose();
       }
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setError(friendlyError(err));
     } finally {
       setLoading(false);
     }

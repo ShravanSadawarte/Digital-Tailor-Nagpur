@@ -5,6 +5,7 @@ import {
   getSessionEmail,
   isAdminRequest,
 } from "@/lib/admin-auth";
+import { clientIp, isSameOrigin, rateLimit } from "@/lib/api-guard";
 
 const cookieOpts = {
   httpOnly: true,
@@ -26,6 +27,8 @@ export async function GET() {
 export async function POST(req: Request) {
   const { action, code } = await req.json().catch(() => ({}));
   const adminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+  if (!isSameOrigin(req.headers.get("host") || "", req.headers.get("origin"), req.headers.get("referer")))
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   if (action === "logout") {
     const res = NextResponse.json({ ok: true });
@@ -46,6 +49,11 @@ export async function POST(req: Request) {
   }
 
   if (action === "verify") {
+    // Brute-force guard on the passcode: 10 tries per 10 minutes per IP.
+    if (!rateLimit(`admin-verify:${clientIp(req.headers)}`, 10, 10 * 60 * 1000))
+      return NextResponse.json({ ok: false, error: "Too many attempts. Try again later." }, { status: 429 });
+    if (typeof code !== "string" || code.length > 200)
+      return NextResponse.json({ ok: false, error: "Wrong passcode." });
     if (code && code === process.env.ADMIN_PASSCODE) {
       const res = NextResponse.json({ ok: true });
       res.cookies.set(ADMIN_COOKIE, adminCookieValue(adminEmail), cookieOpts);

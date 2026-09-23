@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { getSupabase } from "@/lib/supabase/client";
 import { Icon } from "@/components/icons";
+import { friendlyError } from "@/lib/client-error";
 
 export default function Contact() {
   const [msg, setMsg] = useState("");
@@ -33,7 +34,7 @@ export default function Contact() {
     setLoading(false);
 
     if (error) {
-      setError(error.message);
+      setError(friendlyError(error));
       return;
     }
     setMsg("Thanks! We will call you back soon.");

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getSupabase } from "@/lib/supabase/client";
+import { friendlyError } from "@/lib/client-error";
 
 const SERVICES = [
   "Shirt",
@@ -50,7 +51,7 @@ export default function Booking({ userId }: Props) {
     setLoading(false);
 
     if (error) {
-      setError(error.message);
+      setError(friendlyError(error));
       return;
     }
     setMsg("Booking received! We will call you to confirm pickup.");
