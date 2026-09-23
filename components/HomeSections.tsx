@@ -210,14 +210,13 @@ export function Craftsman() {
           <span className="pickup-tag">Meet the masterji</span>
           <h2>The hands behind every stitch</h2>
           <p className="muted">
-            For over 25 years, our masterji has stitched for Nagpur families —
-            bridal trousseaus, festive kurtis, school uniforms and those
-            last-minute function alterations that simply had to be perfect.
+            25+ years stitching bridal, festive &amp; everyday wear for
+            Nagpur families — perfect fit, guaranteed.
           </p>
           <ul className="contact-list">
-            <li><strong>Fitting-first:</strong> every outfit checked twice before delivery</li>
-            <li><strong>Honest pricing:</strong> quoted upfront, no surprises later</li>
-            <li><strong>On-time, every time:</strong> function-date delivery you can trust</li>
+            <li><strong>Fitting-first:</strong> every outfit double-checked</li>
+            <li><strong>Honest pricing:</strong> upfront quotes, no surprises</li>
+            <li><strong>On-time:</strong> function-date delivery</li>
           </ul>
           <a href="#contact" className="btn btn-primary btn-lg" style={{ marginTop: 16 }}>
             Visit the shop

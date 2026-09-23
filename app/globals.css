@@ -1353,6 +1353,11 @@ img { max-width: 100%; }
   /* Before/after pairs share one height so the arrow stays centered */
   .tf-mini-photos .tf-img { height: 108px; }
 
+  /* Craftsman: shorter copy pairs with smaller phone type */
+  #craftsman h2 { font-size: 20px; }
+  #craftsman .muted { font-size: 13px; }
+  #craftsman .contact-list li { font-size: 13px; }
+
   /* Numbered steps: keep number + text in a clean hanging indent */
   #booking .contact-list li, #craftsman .contact-list li { gap: 8px; }
   .contact-list li strong { flex: none; }
