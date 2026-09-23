@@ -1266,7 +1266,7 @@ img { max-width: 100%; }
 /* ============ Stage-4 mobile refinement (phone alignment only) ============ */
 @media (max-width: 860px) {
   /* Hero final tighten */
-  .hero-v2 { padding: 16px 0 32px; }
+  .hero-v2 { padding: 8px 0 20px; }
   .hero-v2 h1 { font-size: 30px; line-height: 1.12; margin: 12px 0 8px; }
   .hero-sub { font-size: 14px; line-height: 1.5; }
   /* Small headline box just below navbar (phone only) */
@@ -1291,7 +1291,7 @@ img { max-width: 100%; }
   .hero-fashion-empty { border-radius: 12px; padding: 10px; gap: 6px; }
   .hero-fashion-tag { font-size: 10px; padding: 5px 12px; bottom: -12px; }
   /* Phone hero: headline full-width, then photo | stats side-by-side */
-  .hero-v2 { display: grid; grid-template-columns: 132px 1fr; gap: 12px; padding: 16px 16px 32px; }
+  .hero-v2 { display: grid; grid-template-columns: 132px 1fr; gap: 10px; padding: 8px 16px 20px; }
   .hero-v2 .container { display: contents; }
   .hero-v2 .hero-grid { display: contents; }
   .hero-v2 .reveal { position: relative; z-index: 1; min-width: 0; }
