@@ -1076,6 +1076,30 @@ img { max-width: 100%; }
   .offer-img { height: auto; max-height: 200px; object-fit: contain; background: #fff; }
   .tf-cta { min-height: 50px; }
   .sec-head .btn { min-height: 46px; }
+
+  /* Copy diet: hide secondary text, clamp the rest (small phones) */
+  .hero-signup-link { display: none; }
+  .sec-head .muted { display: none; }
+  .page-hero { padding: 22px 18px; }
+  .page-hero p { display: none; }
+  .builder-cta p { display: none; }
+  .visit-card .muted { display: none; }
+  #contact .contact-grid > div:first-child > .muted { display: none; }
+  #craftsman .btn { display: none; }
+  #craftsman .muted {
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .offer-card .muted, .tf-mini > p {
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .offer-cond {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .foot-brand p { display: none; }
+  .foot-bottom span:last-child { display: none; }
 }
 
 /* ============ Stage-3 mobile densify (≤860px): smaller, same hierarchy ============ */
