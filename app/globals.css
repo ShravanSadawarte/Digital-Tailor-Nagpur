@@ -1270,8 +1270,8 @@ img { max-width: 100%; }
 @media (max-width: 860px) {
   /* Hero final tighten */
   .hero-v2 { padding: 8px 0 20px; }
-  .hero-v2 h1 { font-size: 30px; line-height: 1.12; margin: 12px 0 8px; }
-  .hero-sub { font-size: 14px; line-height: 1.5; }
+  .hero-v2 h1 { font-size: 22px; line-height: 1.12; margin: 12px 0 8px; }
+  .hero-sub { font-size: 10.5px; line-height: 1.5; }
   /* Small headline box just below navbar (phone only) */
   .hero-head-box {
     background: rgba(255, 255, 255, .08);
