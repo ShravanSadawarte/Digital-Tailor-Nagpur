@@ -72,6 +72,12 @@ export function ShopPreview() {
             </Link>
             </Reveal>
           ))}
+          <Reveal delay={320}>
+            <Link href="/shop" className="card product-card lift view-all-card" aria-label="View all products">
+              <span className="view-all-arrow" aria-hidden>→</span>
+              <strong>View all</strong>
+            </Link>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -147,6 +153,12 @@ export function TransformationsPreview() {
             </div>
             </Reveal>
           ))}
+          <Reveal delay={270}>
+            <Link href="/transformations" className="feature tf-mini view-all-card" aria-label="See all transformations">
+              <span className="view-all-arrow" aria-hidden>→</span>
+              <strong>See all</strong>
+            </Link>
+          </Reveal>
         </div>
       </div>
     </section>
