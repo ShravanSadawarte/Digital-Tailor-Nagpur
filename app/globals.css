@@ -1354,6 +1354,16 @@ img { max-width: 100%; }
   #booking .contact-list li, #craftsman .contact-list li { gap: 8px; }
   .contact-list li strong { flex: none; }
 
+  /* Services: compact 3-up, icon + heading only */
+  #services .muted { display: none; }
+  #services h2 { font-size: 22px; margin-bottom: 12px; }
+  #services .grid3 { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  #services .feature { padding: 12px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  #services .feature p { display: none; }
+  #services .feature h3 { font-size: 13px; line-height: 1.3; margin: 0; }
+  #services .f-icon { margin: 0; }
+  #services .f-icon .icon { width: 26px; height: 26px; }
+
   /* Toolbar + misc */
   .searchbar { margin: 10px 0 2px; }
   .searchbar input { padding: 12px 0; }
