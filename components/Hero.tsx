@@ -52,16 +52,18 @@ export default function Hero({ onSignup }: Props) {
             <span className="pill-arrow">→</span>
           </a>
 
-          <h1>
-            Perfect fit,
-            <br />
-            <em>stitched for you.</em>
-          </h1>
+          <div className="hero-head-box">
+            <h1>
+              Perfect fit,
+              <br />
+              <em>stitched for you.</em>
+            </h1>
 
-          <p className="hero-sub">
-            Stitch what you want, wear what you want.{" "}
-            <span className="hero-only">Only in Nagpur.</span>
-          </p>
+            <p className="hero-sub">
+              Stitch what you want, wear what you want.{" "}
+              <span className="hero-only">Only in Nagpur.</span>
+            </p>
+          </div>
 
           <div className="hero-ctas">
             <button
@@ -108,7 +110,7 @@ export default function Hero({ onSignup }: Props) {
       </div>
 
       <div className="container">
-        <Reveal delay={220}>
+        <Reveal delay={220} className="hero-stats-wrap">
         <div className="hero-stats-bar">
           <div>
             <strong><Count text={hero.orders} /></strong>
