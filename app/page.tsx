@@ -24,10 +24,10 @@ export default function Home() {
         <Hero onSignup={() => setAuthMode("signup")} />
         <Marquee />
         <ShopPreview />
-        <Services />
         <OffersStrip />
-        <TransformationsPreview />
         <BuilderCTA />
+        <TransformationsPreview />
+        <Services />
         <Craftsman />
         <Visit />
         <Contact />
